@@ -1,4 +1,5 @@
 import tkinter as tk
+from PIL import Image
 from Transferencia_calor import *
 
 
@@ -23,7 +24,7 @@ class GUI(tk.Frame):
 
     def managed_windows(self):
         self.newWindow = tk.Toplevel(self.master)
-        self.newWindow.geometry('400x400')
+        self.newWindow.geometry('700x700')
         self.app = window_muros(self.newWindow)
 
 
@@ -54,7 +55,9 @@ class window_muros(tk.Frame):
         self.quit.grid(row=5,column=0)
 
     def images(self):
-        self.muro1 = tk.PhotoImage(file="images\\muros1.PNG")
+        self.muro1 = Image.open("images\\muros1.PNG")
+        self.muro1 = self.musro1.resize((150, 150))
+        self.muro1 = ImageTk.PhotoImage(self.muro1)
         self.muro2 = tk.PhotoImage(file="images\\muros2.PNG")
 
 master = tk.Tk()
