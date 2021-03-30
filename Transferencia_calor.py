@@ -1,4 +1,4 @@
-from sympy import symbols, Eq, solve, init_printing
+from sympy import symbols, Eq, solve
 # -----------------------------------------------------------Reynolds----------------------------------
 
 
