@@ -1,1 +1,3 @@
-import Tkinter 
+import Tkinter as *
+print('hola como estas')
+
