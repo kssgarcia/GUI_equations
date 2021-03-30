@@ -44,7 +44,7 @@ class Muros:
     def Solucion(self):
         ecuacion = Eq((Muros.T1 - Muros.T2) /
                       (Muros.conduccion + Muros.convec)-Muros.Q, 0)
-        return f'La incognita {Muros.incog} tiene un valor de {solve(ecuacion, Muros.incog)[0]}'
+        return (Muros.incog, solve(ecuacion, Muros.incog)[0])
 
     @classmethod
     def __repr__(cls):
@@ -57,11 +57,10 @@ if __name__ == '__main__':
     Muros.T2 = 50
     Muros.conveccion(h=1000, Ac=None)
     muro_1 = Muros(L=50/1000, k=1, A=1)
-    muro_2 = Muros(L=50/1000, k=1, A=0.5)
-    muro_3 = Muros(L=50/1000, k=1, A=0.01)
-    Muros.conveccion(h=500, Ac=1)
-    print(muro_3.Solucion())
-    print(muro_1)
+    # muro_2 = Muros(L=50/1000, k=1, A=0.5)
+    # muro_3 = Muros(L=50/1000, k=1, A=0.01)
+    # Muros.conveccion(h=500, Ac=1)
+    print(muro_1.Solucion())
 # -----------------------------------------------------------Reynolds----------------------------------
 
 
@@ -114,11 +113,11 @@ class Reynolds:
         return 'Ejemplo de uso:\n\tRey_1 = Reynolds(Um=10, d=0.0254, U=2.57E-5)\n\tRey_1.Densidad(P=2*1.0132E5, R=287, T=473)\n\tprint(Rey_1.solucion())'
 
 
-if __name__ == '__main__':
-    Rey_1 = Reynolds(Re=None, Um=10, d=0.0254, U=2.57E-5)
-    Rey_1.Densidad(P=2*1.0132E5, R=287, T=473)
-    Rey_1.solucion()
-    print(Rey_1.solucion())
+# if __name__ == '__main__':
+#     Rey_1 = Reynolds(Re=None, Um=10, d=0.0254, U=2.57E-5)
+#     Rey_1.Densidad(P=2*1.0132E5, R=287, T=473)
+#     Rey_1.solucion()
+#     print(Rey_1.solucion())
 # -----------------------------------------------------------Nusselt----------------------------------
 
 
@@ -162,14 +161,14 @@ class Nusselt(Reynolds):
         return 'Ejemplo de uso:\n\tRey_1 = Reynolds(Um=10, d=0.0254, U=2.57E-5)\n\tRey_1.Densidad(P=2*1.0132E5, R=287, T=473)\n\tprint(Rey_1.solucion())'
 
 
-if __name__ == '__main__':
-    nuss_1 = Nusselt(Re=None, Um=10, d=0.0254, U=2.57E-5,
-                     h=None, k=0.0386, Pr=0.681, n=0.4)
-    # nuss_1 = Nusselt(Re=14753.0811949218, Um=10, d=0.0254, U=2.57E-5,
-    #                  h=None, k=0.0386, Pr=0.681, n=0.4)
-    nuss_1.Densidad(P=2*1.0132E5, R=287, T=473)
-    print(nuss_1.solucion())
+# if __name__ == '__main__':
+#     nuss_1 = Nusselt(Re=None, Um=10, d=0.0254, U=2.57E-5,
+#                      h=None, k=0.0386, Pr=0.681, n=0.4)
+#     # nuss_1 = Nusselt(Re=14753.0811949218, Um=10, d=0.0254, U=2.57E-5,
+#     #                  h=None, k=0.0386, Pr=0.681, n=0.4)
+#     nuss_1.Densidad(P=2*1.0132E5, R=287, T=473)
+#     print(nuss_1.solucion())
 
-    nuss_1.NPr()
-    nuss_1.Nh()
-    print(nuss_1.solucion_total())
+#     nuss_1.NPr()
+#     nuss_1.Nh()
+#     print(nuss_1.solucion_total())
