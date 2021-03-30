@@ -1,3 +1,2 @@
-import Tkinter as *
-print('hola como estas')
-
+import tkinter as tk
+window = tk.Tk()
