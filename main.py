@@ -107,7 +107,7 @@ class window_radiacion(Frame):
         Label(self, text=f'{self.Radia_1.solucion()}').grid(row=9, column=4)
 
 master = ThemedTk(themebg=True)
-master.set_theme('clam')
+master.set_theme('ubuntu')
 master.geometry('200x150')
 app = GUI(master=master)
 app.mainloop()
