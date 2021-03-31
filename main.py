@@ -107,7 +107,8 @@ class window_radiacion(ttk.Frame):
         ttk.Label(self, text=f'{self.Radia_1.solucion()}').grid(row=9, column=4)
 
 master = ThemedTk(themebg=True)
-master.set_theme('ubuntu')
+#ubuntu
+master.set_theme('breeze')
 master.geometry('200x150')
 app = GUI(master=master)
 app.mainloop()
