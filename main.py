@@ -1,20 +1,20 @@
-from tkinter import *
+import tkinter as tk
 from PIL import Image, ImageTk
-from tkinter.ttk import *
+from tkinter import ttk
 from ttkthemes import ThemedTk
 
 from Transferencia_calor import *
 
-class GUI(Frame):
+class GUI(ttk.Frame):
     def __init__(self, master=None):
         super().__init__(master)
         self.master = master
         self.pack()
         # create the button and set the command
-        self.radiacion = Button(self, text="Radiacion", command=self.managed_windows)
-        self.reynolds = Button(self, text="Reynolds")
-        self.nusselt = Button(self, text="Nusselt")
-        self.quit = Button(self, text="Quit", command=self.master.destroy)
+        self.radiacion = ttk.Button(self, text="Radiacion", command=self.managed_windows)
+        self.reynolds = ttk.Button(self, text="Reynolds")
+        self.nusselt = ttk.Button(self, text="Nusselt")
+        self.quit = ttk.Button(self, text="Quit", command=self.master.destroy)
         # Grid the buttons
         self.Grid_set()
 
@@ -25,12 +25,12 @@ class GUI(Frame):
         self.quit.grid(row=3, column=0)
 
     def managed_windows(self):
-        self.newWindow = Toplevel(self.master)
+        self.newWindow = tk.Toplevel(self.master)
         self.newWindow.geometry('500x500')
         self.app = window_radiacion(self.newWindow)
 
 #---------------------------------------------Radiacion------------------------------------------
-class window_radiacion(Frame):
+class window_radiacion(ttk.Frame):
     def __init__(self, master=None):
         super().__init__(master)
         self.pack()
@@ -45,34 +45,34 @@ class window_radiacion(Frame):
     def labels_pictures(self):
         # create the button and set the command
         # Title
-        Label(self, text='Radiacion').grid(row=0, column=1, columnspan=2)
+        ttk.Label(self, text='Radiacion').grid(row=0, column=1, columnspan=2)
         # Images
-        Label(self, image=self.radia1).grid(row=1, column=0, columnspan=2)
+        ttk.Label(self, image=self.radia1).grid(row=1, column=0, columnspan=2)
         # Variables
-        Label(self, text='q').grid(row=3, column=0)
-        Label(self, text='E').grid(row=4, column=0)
-        Label(self, text='A').grid(row=5, column=0)
-        Label(self, text='T1').grid(row=6, column=0)
-        Label(self, text='T2').grid(row=7, column=0)
+        ttk.Label(self, text='q').grid(row=3, column=0)
+        ttk.Label(self, text='E').grid(row=4, column=0)
+        ttk.Label(self, text='A').grid(row=5, column=0)
+        ttk.Label(self, text='T1').grid(row=6, column=0)
+        ttk.Label(self, text='T2').grid(row=7, column=0)
         # button to q
-        Button(self, text="Quit", command=self.master.destroy).grid(row=11,column=0)
+        ttk.Button(self, text="Quit", command=self.master.destroy).grid(row=11,column=0)
 
 
     def Entries(self):
         # labels for entries
-        self.q = Entry(self)
+        self.q = ttk.Entry(self)
         self.q.grid(row=3, column=1, columnspan=2)
 
-        self.E = Entry(self)
+        self.E = ttk.Entry(self)
         self.E.grid(row=4, column=1, columnspan=2)
 
-        self.A = Entry(self)
+        self.A = ttk.Entry(self)
         self.A.grid(row=5, column=1, columnspan=2)
 
-        self.T1 = Entry(self)
+        self.T1 = ttk.Entry(self)
         self.T1.grid(row=6, column=1, columnspan=2)
 
-        self.T2 = Entry(self)
+        self.T2 = ttk.Entry(self)
         self.T2.grid(row=7, column=1, columnspan=2)
     
 
@@ -88,8 +88,8 @@ class window_radiacion(Frame):
 
 
     def Buttons(self):
-        save = Button(self, text='Save', command=self.get_entries)
-        show = Button(self, text='Show', command=self.show)
+        save = ttk.Button(self, text='Save', command=self.get_entries)
+        show = ttk.Button(self, text='Show', command=self.show)
         save.grid(row=10, column=4)
         show.grid(row=10, column=5)
 
@@ -104,7 +104,7 @@ class window_radiacion(Frame):
         self.Radia_1 = Radiacion(q=q, A=A, T1=T1, T2=T2, E=E)
 
     def show(self):
-        Label(self, text=f'{self.Radia_1.solucion()}').grid(row=9, column=4)
+        ttk.Label(self, text=f'{self.Radia_1.solucion()}').grid(row=9, column=4)
 
 master = ThemedTk(themebg=True)
 master.set_theme('ubuntu')
