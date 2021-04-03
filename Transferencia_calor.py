@@ -110,54 +110,77 @@ if __name__ == '__main__':
 # -----------------------------------------------------------Nusselt----------------------------------
 
 
-# class Nusselt(Reynolds):
-#     incog = 0
+class Nusselt1():
+    incog = 0
 
-#     def __init__(self, Re, Um, d, U, h, k, Pr, n):
-#         super().__init__(Re, Um, d, U)
-#         self.h = h
-#         self.k = k
-#         self.Pr = Pr
-#         self.n = n
-#         if self.h == None:
-#             self.h = symbols('h')
-#             Nusselt.incog = self.h
-#         elif self.k == None:
-#             self.k = symbols('k')
-#             Nusselt.incog = self.k
-#         elif self.Pr == None:
-#             self.Pr = symbols('Pr')
-#             Nusselt.incog = self.Pr
-#         elif self.n == None:
-#             self.n = symbols('n')
-#             Nusselt.incog = self.n
+    def __init__(self, nuss, Re, Pr, n):
+        self.nuss = nuss
+        self.Re = Re
+        self.Pr = Pr
+        self.n = n
+        if self.nuss == None:
+            self.nuss = symbols('nuss')
+            Nusselt1.incog = self.nuss
+        elif self.Re == None:
+            self.Re = symbols('Re')
+            Nusselt1.incog = self.Re
+        elif self.Pr == None:
+            self.Pr = symbols('Pr')
+            Nusselt1.incog = self.Pr
+        elif self.n == None:
+            self.n = symbols('n')
+            Nusselt1.incog = self.n
 
-#     def NPr(self):
-#         N_Pr = (0.023*(self.solv**0.8)*self.Pr**self.n)
-#         return N_Pr
+    def NPr(self):
+        N_Pr = (0.023*(self.Re**0.8)*self.Pr**self.n)
+        return N_Pr
 
-#     def Nh(self):
-#         N_h = (self.h*self.d)/self.k
-#         return N_h
+    def solucion_total(self):
+        ecuacion = Eq(self.NPr(), self.nuss)
+        self.solv, *_ = solve(ecuacion, Nusselt1.incog)
+        return f'El valor de {Nusselt1.incog} es de {self.solv}'
 
-#     def solucion_total(self):
-#         ecuacion = Eq(self.NPr()-self.Nh(), 0)
-#         self.solv = solve(ecuacion, Nusselt.incog)[0]
-#         return f'El valor de {Nusselt.incog} es de {self.solv}'
+if __name__ == '__main__':
+    nuss_1 = Nusselt1(nuss=None, Re=545, Pr=0.681, n=0.4)
+    print(nuss_1.solucion_total())
 
-#     @classmethod
-#     def __repr__(cls):
-#         return 'Ejemplo de uso:\n\tRey_1 = Reynolds(Um=10, d=0.0254, U=2.57E-5)\n\tRey_1.Densidad(P=2*1.0132E5, R=287, T=473)\n\tprint(Rey_1.solucion())'
+class Nusselt2():
+    incog = 0
 
+    def __init__(self, nuss, Re, Pr, U, Um):
+        self.nuss = nuss
+        self.Re = Re
+        self.Pr = Pr
+        self.U = U
+        self.Um = Um
+        if self.nuss == None:
+            self.nuss = symbols('nuss')
+            Nusselt2.incog = self.nuss
+        elif self.Re == None:
+            self.Re = symbols('Re')
+            Nusselt2.incog = self.Re
+        elif self.Pr == None:
+            self.Pr = symbols('Pr')
+            Nusselt2.incog = self.Pr
+        elif self.U == None:
+            self.U = symbols('U')
+            Nusselt2.incog = self.U
+        elif self.Um == None:
+            self.Um = symbols('Um')
+            Nusselt2.incog = self.Um
 
-# # if __name__ == '__main__':
-# #     nuss_1 = Nusselt(Re=None, Um=10, d=0.0254, U=2.57E-5,
-# #                      h=None, k=0.0386, Pr=0.681, n=0.4)
-# #     # nuss_1 = Nusselt(Re=14753.0811949218, Um=10, d=0.0254, U=2.57E-5,
-# #     #                  h=None, k=0.0386, Pr=0.681, n=0.4)
-# #     nuss_1.Densidad(P=2*1.0132E5, R=287, T=473)
-# #     print(nuss_1.solucion())
+    def NPr(self):
+        N_Pr = (0.027*(self.Re**0.8)*self.Pr**0.33)*((self.U/self.Um)**0.14)
+        return N_Pr
 
-# #     nuss_1.NPr()
-# #     nuss_1.Nh()
-# #     print(nuss_1.solucion_total())
+    def solucion_total(self):
+        ecuacion = Eq(self.NPr(), self.nuss)
+        self.solv, *_ = solve(ecuacion, Nusselt2.incog)
+        return f'El valor de {Nusselt2.incog} es de {self.solv}'
+
+    def __str__(self):
+        return self.solucion_total()
+
+if __name__ == '__main__':
+    nuss_1 = Nusselt2(nuss=56, Re=145, Pr=55, U=4555, Um=None)
+    print(nuss_1)
