@@ -145,7 +145,7 @@ class window_radiacion(ttk.Frame):
     def Buttons(self):
         save = ttk.Button(self, text='Save', command=self.get_entries)
         show = ttk.Button(self, text='Show', command=self.show)
-        tbl = ttk.Button(self, text='Tables', command=self.managed_windows1)
+        tbl = ttk.Button(self, text='Tablas', command=self.managed_windows1)
         save.grid(row=10, column=1)
         show.grid(row=10, column=2)
         tbl.grid(row=10, column=3)
