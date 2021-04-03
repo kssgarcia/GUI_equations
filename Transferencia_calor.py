@@ -33,6 +33,32 @@ class Radiacion:
         self.solv, *_ = solve(ecuacion, Radiacion.incog)
         return f'El valor de {Radiacion.incog} es de {self.solv}'
 
+# ----------------------------------------Radiacion formula 2---------------------------------------------
+
+class Radiacion_formula_2:
+    incog = 0
+
+    def __init__(self, p, o, t):
+        self.p = p
+        self.o = o
+        self.t = t
+
+        if self.p == None:
+            self.p = symbols('p')
+            Radiacion_formula_2.incog = self.p
+        elif self.o == None:
+            self.o = symbols('o')
+            Radiacion_formula_2.incog = self.o
+        elif self.t == None:
+            self.t = symbols('t')
+            Radiacion_formula_2.incog = self.t
+
+    def solucion(self, solv=None):
+
+        ecuacion2 = Eq(self.p + self.o + self.t, 1)
+        self.solv, *_ = solve(ecuacion2, Radiacion_formula_2.incog)
+        return f'El valor de {Radiacion_formula_2.incog} es de {self.solv}'
+
 
     # @classmethod
     # def __repr__(cls):

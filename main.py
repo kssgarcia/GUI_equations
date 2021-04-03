@@ -27,7 +27,7 @@ class GUI(ttk.Frame):
     
     def sub_managed_windows(self):
         self.newWindow = tk.Toplevel(self.master)
-        self.newWindow.geometry('200x200')
+        self.newWindow.geometry('200x150')
         self.app = window1(self.newWindow)
 
 class window1(ttk.Frame):
@@ -57,22 +57,22 @@ class cuerpo_negro(ttk.Frame):
         super().__init__(master)
         self.pack()
         # Images 
-        # self.imagenes()
+        self.imagenes()
         # Widgets
         self.labels_imagenes()
         self.Entradas()
-        # self.Botones()
+        self.Botones()
     def labels_imagenes(self):
         # Title
         ttk.Label(self, text='Radiacion').grid(row=0, column=1, columnspan=2)
         # Images
-        # ttk.Label(self, image=self.radia4).grid(row=1, column=0, columnspan=2)
+        ttk.Label(self, image=self.radia4).grid(row=1, column=0, columnspan=2)
+        ttk.Label(self, image=self.radia5).grid(row=1, column=2, columnspan=2)
         #Variables
         ttk.Label(self, text='Reflectividad [p]').grid(row=3, column=0)
         ttk.Label(self, text='Absorbencia [o]').grid(row=4, column=0)
         ttk.Label(self, text='Transmisividad [t]').grid(row=5, column=0)
-        #button
-        ttk.Button(self, text="Quit", command=self.master.destroy).grid(row=11,column=0)
+
     def Entradas(self):
         # labels for entries
         self.p = ttk.Entry(self)
@@ -83,6 +83,37 @@ class cuerpo_negro(ttk.Frame):
 
         self.t = ttk.Entry(self)
         self.t.grid(row=5, column=1, columnspan=2)
+
+    def Botones(self):
+        save = ttk.Button(self, text='Guardar',command=self.obtener_entradas)
+        show = ttk.Button(self, text='Calcular', command=self.mostrar)
+        save.grid(row=10, column=1)
+        show.grid(row=10, column=2)
+
+    def imagenes(self):
+        # image 1
+        self.radia4 = Image.open("images\\radia4.JPG")
+        self.radia4 = self.radia4.resize((250, 200))
+        self.radia4 = ImageTk.PhotoImage(self.radia4)
+        # Image 2
+        self.radia5 = Image.open("images\\radia5.JPG")
+        self.radia5 = self.radia5.resize((150, 200))
+        self.radia5 = ImageTk.PhotoImage(self.radia5)
+
+    def obtener_entradas(self):
+        self.dict1_entries = {'p': self.p.get(), 'o': self.o.get(), 't': self.t.get()}
+        for item, value in self.dict1_entries.items():
+            if value == 'None':
+                self.dict1_entries[item] = None
+            elif type(value) is str:
+                self.dict1_entries[item] = float(value)
+        self.radiacion_termica(**self.dict1_entries)
+
+    def radiacion_termica(self, p, o, t):
+        self.Radia_2 = Radiacion_formula_2(p=p, o=o, t=t)
+
+    def mostrar(self):
+        ttk.Label(self, text=f'{self.Radia_2.solucion()}').grid(row=11, column=1)
 
 class window_radiacion(ttk.Frame):
     def __init__(self, master=None):
