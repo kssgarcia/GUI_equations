@@ -122,7 +122,7 @@ class window_Nusselt(ttk.Frame):
     def nuss_6(self):
         self.newWindow = tk.Toplevel(self.master)
         self.newWindow.title('Nusselt-6')
-        self.newWindow.geometry('700x450')
+        self.newWindow.geometry('800x500')
         self.app = Nusselt_6(self.newWindow)
 #---------------------------------------------Radiacion------------------------------------------
 class cuerpo_negro(ttk.Frame):
@@ -704,7 +704,7 @@ class Nusselt_5(ttk.Frame):
     def labels_pictures(self):
         # create the button and set the command
         # Title
-        ttk.Label(self, text='Nusselt-3').grid(row=0, column=1, columnspan=2)
+        ttk.Label(self, text='Nusselt-5').grid(row=0, column=1, columnspan=2)
         # Images
         ttk.Label(self, image=self.nuss_7img).grid(row=1, column=1)
         # Variables
@@ -734,7 +734,7 @@ class Nusselt_5(ttk.Frame):
         self.L = ttk.Entry(self)
         self.L.grid(row=7, column=1, columnspan=2)
     
-    
+
     def get_entries(self):
         self.dict_entries = {'Re': self.Re.get(), 'nuss': self.nuss.get(), 'Pr': self.Pr.get(), 'd': self.d.get(), 'L': self.L.get()}
         for item, value in self.dict_entries.items():
@@ -762,6 +762,89 @@ class Nusselt_5(ttk.Frame):
 
     def show(self):
         ttk.Label(self, text=f'{self.nusselt_1}').grid(row=6, column=3)
+
+class Nusselt_6(ttk.Frame):
+    def __init__(self, master=None):
+        super().__init__(master)
+        self.pack()
+        # Images 
+        self.images()
+        # Widgets
+        self.labels_pictures()
+        self.Entries()
+        self.Buttons()
+
+
+    def labels_pictures(self):
+        # create the button and set the command
+        # Title
+        ttk.Label(self, text='Nusselt-6').grid(row=0, column=1, columnspan=2)
+        # Images
+        ttk.Label(self, image=self.nuss_4img).grid(row=1, column=1)
+        # Variables
+        ttk.Label(self, text='Re').grid(row=3, column=0)
+        ttk.Label(self, text='nuss').grid(row=4, column=0)
+        ttk.Label(self, text='Pr').grid(row=5, column=0)
+        ttk.Label(self, text='U[m/s]').grid(row=6, column=0)
+        ttk.Label(self, text='Um[kg/m*s]').grid(row=7, column=0)
+        ttk.Label(self, text='d[m]').grid(row=8, column=0)
+        ttk.Label(self, text='L[m]').grid(row=9, column=0)
+        # button to q
+        ttk.Button(self, text="Salir", command=self.master.destroy).grid(row=11,column=0)
+
+
+    def Entries(self):
+        # labels for entries
+        self.Re = ttk.Entry(self)
+        self.Re.grid(row=3, column=1, columnspan=2)
+
+        self.nuss = ttk.Entry(self)
+        self.nuss.grid(row=4, column=1, columnspan=2)
+
+        self.Pr = ttk.Entry(self)
+        self.Pr.grid(row=5, column=1, columnspan=2)
+
+        self.U = ttk.Entry(self)
+        self.U.grid(row=6, column=1, columnspan=2)
+
+        self.Um = ttk.Entry(self)
+        self.Um.grid(row=7, column=1, columnspan=2)
+
+        self.d = ttk.Entry(self)
+        self.d.grid(row=8, column=1, columnspan=2)
+
+        self.L = ttk.Entry(self)
+        self.L.grid(row=9, column=1, columnspan=2)
+    
+
+
+    def get_entries(self):
+        self.dict_entries = {'Re': self.Re.get(), 'nuss': self.nuss.get(), 'Pr': self.Pr.get(), 'U': self.U.get(), 'Um': self.Um.get(), 'd': self.d.get(), 'L': self.L.get()}
+        for item, value in self.dict_entries.items():
+            if value == 'None':
+                self.dict_entries[item] = None
+            elif type(value) is str:
+                self.dict_entries[item] = float(value)
+        self.equation(**self.dict_entries)
+
+
+    def Buttons(self):
+        save = ttk.Button(self, text='Guardar', command=self.get_entries)
+        show = ttk.Button(self, text='Calcular', command=self.show)
+        save.grid(row=11, column=4)
+        show.grid(row=11, column=5)
+
+
+    def images(self):
+        self.nuss_4img = Image.open("images\\nuss_8.PNG")
+        self.nuss_4img = self.nuss_4img.resize((400, 200))
+        self.nuss_4img = ImageTk.PhotoImage(self.nuss_4img)
+
+    def equation(self, nuss, Re, Pr, d, L, U, Um):
+        self.nusselt_1 = Nusselt6(Re=Re, nuss=nuss, Pr=Pr, U=U, Um=Um, d=d, L=L)
+
+    def show(self):
+        ttk.Label(self, text=f'{self.nusselt_1}').grid(row=9, column=3)
 
 master = ThemedTk(themebg=True)
 #ubuntu

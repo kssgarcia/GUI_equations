@@ -298,6 +298,51 @@ class Nusselt5():
     def __str__(self):
         return self.solucion_total()
 
+class Nusselt6():
+    incog = 0
+
+    def __init__(self, nuss, Re, Pr, d, L, U, Um):
+        self.nuss = nuss
+        self.Re = Re
+        self.Pr = Pr
+        self.U = U
+        self.Um = Um
+        self.d = d
+        self.L =L
+        if self.nuss == None:
+            self.nuss = symbols('nuss')
+            Nusselt6.incog = self.nuss
+        elif self.Re == None:
+            self.Re = symbols('Re')
+            Nusselt6.incog = self.Re
+        elif self.Pr == None:
+            self.Pr = symbols('Pr')
+            Nusselt6.incog = self.Pr
+        elif self.U == None:
+            self.U = symbols('U')
+            Nusselt6.incog = self.U
+        elif self.Um == None:
+            self.Um = symbols('Um')
+            Nusselt6.incog = self.Um
+        elif self.d == None:
+            self.d = symbols('d')
+            Nusselt6.incog = self.d
+        elif self.L == None:
+            self.L = symbols('L')
+            Nusselt6.incog = self.L
+
+    def NPr(self):
+        N_Pr = (1.86*((self.Re*self.Pr)**0.333))*((self.d/self.L)**0.33)*((self.U/self.Um)**0.14)
+        return N_Pr
+
+    def solucion_total(self):
+        ecuacion = Eq(self.NPr(), self.nuss)
+        self.solv, *_ = solve(ecuacion, Nusselt6.incog)
+        return f'El valor de {Nusselt6.incog} es de {self.solv}'
+
+    def __str__(self):
+        return self.solucion_total()
+
 if __name__ == '__main__':
-    nuss_1 = Nusselt5(nuss=None, Re=97956, Pr=78, d=69, L=7)
+    nuss_1 = Nusselt6(nuss=None, Re=97956, Pr=78, d=69, L=7, U=64, Um=64)
     print(nuss_1)
