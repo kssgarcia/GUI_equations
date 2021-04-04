@@ -140,10 +140,6 @@ class Nusselt1():
         self.solv, *_ = solve(ecuacion, Nusselt1.incog)
         return f'El valor de {Nusselt1.incog} es de {self.solv}'
 
-if __name__ == '__main__':
-    nuss_1 = Nusselt1(nuss=None, Re=545, Pr=0.681, n=0.4)
-    print(nuss_1.solucion_total())
-
 class Nusselt2():
     incog = 0
 
@@ -181,6 +177,127 @@ class Nusselt2():
     def __str__(self):
         return self.solucion_total()
 
+class Nusselt3():
+    incog = 0
+
+    def __init__(self, Re, nuss, Pr, d, L):
+        self.nuss = nuss
+        self.Re = Re
+        self.Pr = Pr
+        self.d = d
+        self.L = L
+        if self.nuss == None:
+            self.nuss = symbols('nuss')
+            Nusselt3.incog = self.nuss
+        elif self.Re == None:
+            self.Re = symbols('Re')
+            Nusselt3.incog = self.Re
+        elif self.Pr == None:
+            self.Pr = symbols('Pr')
+            Nusselt3.incog = self.Pr
+        elif self.d == None:
+            self.d = symbols('d')
+            Nusselt3.incog = self.d
+        elif self.L == None:
+            self.L = symbols('L')
+            Nusselt3.incog = self.L
+
+    def NPr(self):
+        N_Pr = (0.036*(self.Re**0.8)*self.Pr**0.333)*((self.d/self.L)**0.055)
+        return N_Pr
+
+    def solucion_total(self):
+        ecuacion = Eq(self.NPr(), self.nuss)
+        self.solv, *_ = solve(ecuacion, Nusselt3.incog)
+        return f'El valor de {Nusselt3.incog} es de {self.solv}'
+
+    def __str__(self):
+        return self.solucion_total()
+
+class Nusselt4():
+    incog = 0
+
+    def __init__(self, nuss, Re, Pr, Ub, Uw, n, f):
+        self.nuss = nuss
+        self.Re = Re
+        self.Pr = Pr
+        self.Ub = Ub
+        self.Uw = Uw
+        self.n = n
+        self.f = f
+        if self.nuss == None:
+            self.nuss = symbols('nuss')
+            Nusselt4.incog = self.nuss
+        elif self.Re == None:
+            self.Re = symbols('Re')
+            Nusselt4.incog = self.Re
+        elif self.Pr == None:
+            self.Pr = symbols('Pr')
+            Nusselt4.incog = self.Pr
+        elif self.Ub == None:
+            self.Ub = symbols('Ub')
+            Nusselt4.incog = self.Ub
+        elif self.Uw == None:
+            self.Uw = symbols('Uw')
+            Nusselt4.incog = self.Uw
+        elif self.n == None:
+            self.n = symbols('n')
+            Nusselt4.incog = self.n
+        elif self.f == None:
+            self.f = symbols('f')
+            Nusselt4.incog = self.f
+
+    def NPr(self):
+        g = (self.f/8)
+        N_Pr = ((g*self.Re*self.Pr)/(1.07+12.7*pow(g,0.5)*(pow(self.Pr,0.667)-1)))*(self.Ub/self.Uw)**self.n
+        return N_Pr
+
+    def solucion_total(self):
+        ecuacion = Eq(self.NPr(), self.nuss)
+        self.solv, *_ = solve(ecuacion, Nusselt4.incog)
+        return f'El valor de {Nusselt4.incog} es de {self.solv}'
+
+    def __str__(self):
+        return self.solucion_total()
+
+class Nusselt5():
+    incog = 0
+
+    def __init__(self, nuss, Re, Pr, d, L):
+        self.nuss = nuss
+        self.Re = Re
+        self.Pr = Pr
+        self.d = d
+        self.L = L
+        if self.nuss == None:
+            self.nuss = symbols('nuss')
+            Nusselt5.incog = self.nuss
+        elif self.Re == None:
+            self.Re = symbols('Re')
+            Nusselt5.incog = self.Re
+        elif self.Pr == None:
+            self.Pr = symbols('Pr')
+            Nusselt5.incog = self.Pr
+        elif self.d == None:
+            self.d = symbols('d')
+            Nusselt5.incog = self.d
+        elif self.L == None:
+            self.L = symbols('L')
+            Nusselt5.incog = self.L
+
+    def NPr(self):
+        g = (self.d/self.L)
+        N_Pr = 3.66 + ((0.0668*g*self.Re*self.Pr)/(1+0.04*(g*self.Re*self.Pr)**0.667))
+        return N_Pr
+
+    def solucion_total(self):
+        ecuacion = Eq(self.NPr(), self.nuss)
+        self.solv, *_ = solve(ecuacion, Nusselt5.incog)
+        return f'El valor de {Nusselt5.incog} es de {self.solv}'
+
+    def __str__(self):
+        return self.solucion_total()
+
 if __name__ == '__main__':
-    nuss_1 = Nusselt2(nuss=56, Re=145, Pr=55, U=4555, Um=None)
+    nuss_1 = Nusselt5(nuss=None, Re=97956, Pr=78, d=69, L=7)
     print(nuss_1)
