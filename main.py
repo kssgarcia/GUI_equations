@@ -49,6 +49,7 @@ class window_Radia(ttk.Frame):
         # create the buttons and set the command
         self.forradiacion = ttk.Button(self, text="Formula-Radicion", command=self.managed_windows)
         self.radbblack = ttk.Button(self, text="Radiacion de cuerpo negro", command=self.body_black_radiation)
+        self.velocidad_luz = ttk.Button(self,text="Velocidad de la luz",command=self.velocidad_luz_radiation)
         self.quit = ttk.Button(self, text="Quit", command=self.master.destroy)
         # Grid the buttons
         self.forradiacion.grid(row=0, column=0)
@@ -65,6 +66,11 @@ class window_Radia(ttk.Frame):
         self.newWindow.title('Cuerpo-negro')
         self.newWindow.geometry('600x500')
         self.app = cuerpo_negro(self.newWindow)
+    def velocidad_luz_radiation(self):
+        self.newWindow = tk.Toplevel(self.master)
+        self.newWindow.title('Velocidad de la luz')
+        self.newWindow.geometry('600x500')
+        self.app = light_speed(self.newWindow)
 
 class window_Nusselt(ttk.Frame):
     def __init__(self, master=None):
@@ -125,6 +131,63 @@ class window_Nusselt(ttk.Frame):
         self.newWindow.geometry('800x500')
         self.app = Nusselt_6(self.newWindow)
 #---------------------------------------------Radiacion------------------------------------------
+class light_speed(ttk.Frame):
+   def __init__(self, master=None):
+        super().__init__(master)
+        self.pack()
+        # Images 
+        self.imagenes_luz()
+        # Widgets
+        self.labels_luz()
+        self.Entradas_luz()
+        self.Botones_luz()
+    def labels_luz(self):
+        # Title
+        ttk.Label(self, text='Velocidad de la luz').grid(row=0, column=1, columnspan=2)
+        # Images
+        ttk.Label(self, image=self.luz).grid(row=1, column=0, columnspan=2)
+        #Variables
+        ttk.Label(self, text='Longitud de onda [lambda]').grid(row=3, column=0)
+        ttk.Label(self, text='Frecuencia [v]').grid(row=4, column=0)
+
+    def Entradas(self):
+        # labels for entries
+        self.lamb = ttk.Entry(self)
+        self.lamb.grid(row=3, column=1, columnspan=2)
+
+        self.v = ttk.Entry(self)
+        self.v.grid(row=4, column=1, columnspan=2)
+
+    def Botones(self):
+        save = ttk.Button(self, text='Guardar',command=self.obtener_entradas_luz)
+        show = ttk.Button(self, text='Calcular', command=self.mostrar_luz)
+        quit1 = ttk.Button(self, text="Salir", command=self.master.destroy)
+        save.grid(row=10, column=1)
+        show.grid(row=10, column=2)
+        quit1.grid(row=10, column=3)
+
+    def imagenes(self):
+        # image 1
+        self.luz = Image.open("images\\luz.JPG")
+        self.luz = self.luz.resize((250, 200))
+        self.luz = ImageTk.PhotoImage(self.luz)
+
+    def obtener_entradas(self):
+        self.dict2_entries = {'lamb': self.p.get(), 'v': self.o.get()}
+        for item, value in self.dict2_entries.items():
+            if value == 'None':
+                self.dict2_entries[item] = None
+            elif type(value) is str:
+                self.dict2_entries[item] = float(value)
+        self.vel_light(**self.dict2_entries)
+
+    def vel_light(self, lamb, v):
+        self.Radia_light = Radiacion_formula_luz(lamb=lamb, v=v)
+
+    def mostrar(self):
+        ttk.Label(self, text=f'{self.Radia_light.solucion()}').grid(row=11, column=1)
+ 
+
 class cuerpo_negro(ttk.Frame):
     def __init__(self, master=None):
         super().__init__(master)
