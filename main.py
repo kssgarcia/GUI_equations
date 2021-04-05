@@ -54,7 +54,8 @@ class window_Radia(ttk.Frame):
         # Grid the buttons
         self.forradiacion.grid(row=0, column=0)
         self.radbblack.grid(row=1, column=0)
-        self.quit.grid(row=2, column=0)
+        self.quit.grid(row=3, column=0)
+        self.velocidad_luz.grid(row=2, column=0)
     
     def managed_windows(self):
         self.newWindow = tk.Toplevel(self.master)
@@ -132,16 +133,25 @@ class window_Nusselt(ttk.Frame):
         self.app = Nusselt_6(self.newWindow)
 #---------------------------------------------Radiacion------------------------------------------
 class light_speed(ttk.Frame):
-   def __init__(self, master=None):
+    def __init__(self, master=None):
         super().__init__(master)
         self.pack()
         # Images 
         self.imagenes_luz()
         # Widgets
-        self.labels_luz()
+        self.labels()
         self.Entradas_luz()
         self.Botones_luz()
-    def labels_luz(self):
+
+    def Entradas_luz(self):
+        # labels for entries
+        self.lamb = ttk.Entry(self)
+        self.lamb.grid(row=3, column=1, columnspan=2)
+
+        self.v = ttk.Entry(self)
+        self.v.grid(row=4, column=1, columnspan=2)
+    
+    def labels(self):
         # Title
         ttk.Label(self, text='Velocidad de la luz').grid(row=0, column=1, columnspan=2)
         # Images
@@ -150,15 +160,7 @@ class light_speed(ttk.Frame):
         ttk.Label(self, text='Longitud de onda [lambda]').grid(row=3, column=0)
         ttk.Label(self, text='Frecuencia [v]').grid(row=4, column=0)
 
-    def Entradas(self):
-        # labels for entries
-        self.lamb = ttk.Entry(self)
-        self.lamb.grid(row=3, column=1, columnspan=2)
-
-        self.v = ttk.Entry(self)
-        self.v.grid(row=4, column=1, columnspan=2)
-
-    def Botones(self):
+    def Botones_luz(self):
         save = ttk.Button(self, text='Guardar',command=self.obtener_entradas_luz)
         show = ttk.Button(self, text='Calcular', command=self.mostrar_luz)
         quit1 = ttk.Button(self, text="Salir", command=self.master.destroy)
@@ -166,14 +168,14 @@ class light_speed(ttk.Frame):
         show.grid(row=10, column=2)
         quit1.grid(row=10, column=3)
 
-    def imagenes(self):
+    def imagenes_luz(self):
         # image 1
         self.luz = Image.open("images\\luz.JPG")
         self.luz = self.luz.resize((250, 200))
         self.luz = ImageTk.PhotoImage(self.luz)
 
-    def obtener_entradas(self):
-        self.dict2_entries = {'lamb': self.p.get(), 'v': self.o.get()}
+    def obtener_entradas_luz(self):
+        self.dict2_entries = {'lamb': self.lamb.get(), 'v': self.v.get()}
         for item, value in self.dict2_entries.items():
             if value == 'None':
                 self.dict2_entries[item] = None
@@ -184,7 +186,7 @@ class light_speed(ttk.Frame):
     def vel_light(self, lamb, v):
         self.Radia_light = Radiacion_formula_luz(lamb=lamb, v=v)
 
-    def mostrar(self):
+    def mostrar_luz(self):
         ttk.Label(self, text=f'{self.Radia_light.solucion()}').grid(row=11, column=1)
  
 
@@ -336,7 +338,7 @@ class window_radiacion(ttk.Frame):
     
     def managed_windows1(self):
         self.newWindow1 = tk.Toplevel(self.master)
-        self.newWindow.title('Table')
+        self.newWindow1.title('Table')
         self.newWindow1.geometry('500x500')
         self.app = tables(self.newWindow1)
 
