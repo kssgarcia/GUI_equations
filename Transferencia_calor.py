@@ -64,6 +64,28 @@ class Radiacion_formula_2:
 # if __name__ == '__main__':
 #     Radia_1 = Radiacion(q=None, A=5, T1=564, T2=515, E=1)
 #     print(Radia_1.solucion())
+#-----------------------------------------Radiacion_formula_luz----------------------------------------
+class Radiacion_formula_luz:
+    incog = 0
+
+    def __init__(self, lamb, v):
+        self.lamb = lamb
+        self.v = v
+
+        if self.lamb == None:
+            self.lamb = symbols('lamb')
+            Radiacion_formula_luz.incog = self.lamb
+        elif self.v == None:
+            self.v = symbols('v')
+            Radiacion_formula_luz.incog = self.v
+
+    def solucion(self, solv=None):
+
+        ecuacionluz = Eq(self.lamb * self.v, 3e10)
+        self.solv, *_ = solve(ecuacionluz, Radiacion_formula_luz.incog)
+        return f'El valor de {Radiacion_formula_luz.incog} es de {self.solv}'
+
+
 
 # -----------------------------------------------------------Reynolds----------------------------------
 
