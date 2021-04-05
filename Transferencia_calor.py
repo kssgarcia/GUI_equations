@@ -365,6 +365,48 @@ class Nusselt6():
     def __str__(self):
         return self.solucion_total()
 
+class fuerza_arrast():
+    incog = 0
+
+    def __init__(self, Fd, Cd, A, densi, U, g):
+        self.Fd = Fd
+        self.Cd  =Cd
+        self.A = A
+        self.densi = densi
+        self.U = U
+        self.g = g
+        if self.Fd == None:
+            self.Fd = symbols('Fd')
+            fuerza_arrast.incog = self.Fd
+        elif self.Cd == None:
+            self.Cd = symbols('Cd')
+            fuerza_arrast.incog = self.Cd
+        elif self.A == None:
+            self.A = symbols('A')
+            fuerza_arrast.incog = self.A
+        elif self.densi == None:
+            self.densi = symbols('densi')
+            fuerza_arrast.incog = self.densi
+        elif self.U == None:
+            self.U = symbols('U')
+            fuerza_arrast.incog = self.U
+        elif self.g == None:
+            self.g = symbols('g')
+            fuerza_arrast.incog = self.g
+
+    def lado_izq(self):
+        izq = self.Cd*self.A*((self.densi*pow(self.U,2))/(2*self.g))
+        return izq
+
+    def solucion_total(self):
+        ecuacion = Eq(self.lado_izq(), self.Fd)
+        self.solv, *r = solve(ecuacion, fuerza_arrast.incog)
+        return f'El valor de {fuerza_arrast.incog} es de {self.solv}'
+
+    def __str__(self):
+        return self.solucion_total()
+
+
 if __name__ == '__main__':
-    nuss_1 = Nusselt6(nuss=None, Re=97956, Pr=78, d=69, L=7, U=64, Um=64)
+    nuss_1 = fuerza_arrast(Fd=87, Cd=87, A=97, densi=87, U=None, g=421)
     print(nuss_1)
