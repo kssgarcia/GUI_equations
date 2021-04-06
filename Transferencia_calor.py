@@ -1,5 +1,48 @@
 from sympy import symbols, Eq, solve
+# ----------------------------------- masa y momento particulas-----------------------------------------
+class masam_particulas:
+    incog = 0
 
+    def __init__(self, m, fr):
+        self.m = m
+        self.fr = fr
+        if self.m == None:
+            self.m = symbols('m')
+            masam_particulas.incog = self.m
+        elif self.fr == None:
+            self.fr = symbols('fr')
+            masam_particulas.incog = self.fr    
+
+    def solucion(self, solv=None):
+        cosntante_planck = 6.625e-34 #[J.s]
+        ecuacion_mam = Eq(self.m, (cosntante_planck* self.fr)/(3e8**2))
+        self.solv, *_ = solve(ecuacion_mam, masam_particulas.incog)
+        if masam_particulas.incog == self.fr:
+            momento_p = (cosntante_planck*self.solv)/3e8
+        else:
+            momento_p = (cosntante_planck*self.fr)/3e8
+        return f'El valor de {masam_particulas.incog} es de {self.solv} y el momento es de {momento_p}'
+
+# ---------------------------------------------Energia cuantos discretos---------------------------------
+class Energia_cuantos_discretos:
+    incog = 0
+
+    def __init__(self, E, fr):
+        self.E = E
+        self.fr = fr
+        if self.E == None:
+            self.E = symbols('E')
+            Energia_cuantos_discretos.incog = self.E
+        elif self.fr == None:
+            self.fr = symbols('fr')
+            Energia_cuantos_discretos.incog = self.fr
+
+    def solucion(self, solv=None):
+        cosntante_planck = 6.625e-34 #[J.s]
+        ecuacion_cuantos = Eq(self.E,cosntante_planck* self.fr)
+        self.solv, *_ = solve(ecuacion_cuantos, Energia_cuantos_discretos.incog)
+        return f'El valor de {Energia_cuantos_discretos.incog} es de {self.solv}'
+    
 # -----------------------------------------------------------Calor Radiacion-Formula----------------------------------
 
 class Radiacion:
@@ -33,7 +76,7 @@ class Radiacion:
         self.solv, *_ = solve(ecuacion, Radiacion.incog)
         return f'El valor de {Radiacion.incog} es de {self.solv}'
 
-# ----------------------------------------Radiacion formula 2---------------------------------------------
+# ----------------------------------------Radiacion formula 2_cuerpo negro---------------------------------------------
 
 class Radiacion_formula_2:
     incog = 0

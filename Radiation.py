@@ -4,6 +4,120 @@ from tkinter import ttk
 from ttkthemes import ThemedTk
 
 from Transferencia_calor import * 
+class densidade_onda(ttk.Frame):
+    def __init__(self, master=None):
+        super().__init__(master)
+        self.pack()
+        # Images 
+        self.imagenes_donda()
+        # Widgets
+        self.labels_donda()
+        self.Entradas_donda()
+        self.Botones_donda()    
+class mam_particulas(ttk.Frame):
+    def __init__(self, master=None):
+        super().__init__(master)
+        self.pack()
+        # Images 
+        self.imagenes_mam()
+        # Widgets
+        self.labels_mam()
+        self.Entradas_mam()
+        self.Botones_mam()
+    def Entradas_mam(self):
+     # labels for entries
+        self.m = ttk.Entry(self)
+        self.m.grid(row=3, column=1, columnspan=2)
+        self.fr = ttk.Entry(self)
+        self.fr.grid(row=4, column=1, columnspan=2) 
+    def labels_mam(self):
+         # Title
+        ttk.Label(self, text='Masa y momento de las particulas').grid(row=0, column=1, columnspan=2)
+        # Images
+        ttk.Label(self, image=self.mam).grid(row=1, column=0, columnspan=3)
+        #Variables
+        ttk.Label(self, text='Masa [kg]').grid(row=3, column=0)
+        ttk.Label(self, text='Frecuencia [v] [1/s]').grid(row=4, column=0)
+
+    def Botones_mam(self):
+        save = ttk.Button(self, text='Guardar',command=self.obtener_entradas_mam)
+        show = ttk.Button(self, text='Calcular', command=self.mostrar_mam)
+        quit1 = ttk.Button(self, text="Salir", command=self.master.destroy)
+        save.grid(row=10, column=1)
+        show.grid(row=10, column=2)
+        quit1.grid(row=10, column=3)
+    def imagenes_mam(self):
+        # image 1
+        self.mam = Image.open("images\\mam.JPG")
+        self.mam = self.mam.resize((250, 150))
+        self.mam = ImageTk.PhotoImage(self.mam)
+
+    def obtener_entradas_mam(self):
+        self.dictm_entries = {'m': self.m.get(), 'fr': self.fr.get()}
+        for item, value in self.dictm_entries.items():
+            if value == 'None':
+                self.dictm_entries[item] = None
+            elif type(value) is str:
+                self.dictm_entries[item] = float(value)
+        self.mam_ecu(**self.dictm_entries)
+
+    def mam_ecu(self, m, fr):
+        self.Energy_mam = masam_particulas(m=m, fr=fr)
+
+    def mostrar_mam(self):
+        ttk.Label(self, text=f'{self.Energy_mam.solucion()}').grid(row=11, column=1)
+
+class energia_cuantos(ttk.Frame):
+    def __init__(self, master=None):
+        super().__init__(master)
+        self.pack()
+        # Images 
+        self.imagenes_cuantos()
+        # Widgets
+        self.labels_cuantos()
+        self.Entradas_cuantos()
+        self.Botones_cuantos()
+    def Entradas_cuantos(self):
+     # labels for entries
+        self.E = ttk.Entry(self)
+        self.E.grid(row=3, column=1, columnspan=2)
+        self.fr = ttk.Entry(self)
+        self.fr.grid(row=4, column=1, columnspan=2) 
+    def labels_cuantos(self):
+         # Title
+        ttk.Label(self, text='Energia de los cuantos discretos').grid(row=0, column=1, columnspan=2)
+        # Images
+        ttk.Label(self, image=self.ecd).grid(row=1, column=0, columnspan=3)
+        #Variables
+        ttk.Label(self, text='Energia [J]').grid(row=3, column=0)
+        ttk.Label(self, text='Frecuencia [v] [1/s]').grid(row=4, column=0)
+    def Botones_cuantos(self):
+        save = ttk.Button(self, text='Guardar',command=self.obtener_entradas_cenergy)
+        show = ttk.Button(self, text='Calcular', command=self.mostrar_cenergy)
+        quit1 = ttk.Button(self, text="Salir", command=self.master.destroy)
+        save.grid(row=10, column=1)
+        show.grid(row=10, column=2)
+        quit1.grid(row=10, column=3)
+    def imagenes_cuantos(self):
+        # image 1
+        self.ecd = Image.open("images\\ecd.JPG")
+        self.ecd = self.ecd.resize((250, 150))
+        self.ecd = ImageTk.PhotoImage(self.ecd)
+
+    def obtener_entradas_cenergy(self):
+        self.dictc_entries = {'E': self.E.get(), 'fr': self.fr.get()}
+        for item, value in self.dictc_entries.items():
+            if value == 'None':
+                self.dictc_entries[item] = None
+            elif type(value) is str:
+                self.dictc_entries[item] = float(value)
+        self.cuantos_energy(**self.dictc_entries)
+
+    def cuantos_energy(self, E, fr):
+        self.Energy_c = Energia_cuantos_discretos(E=E, fr=fr)
+
+    def mostrar_cenergy(self):
+        ttk.Label(self, text=f'{self.Energy_c.solucion()}').grid(row=11, column=1)
 
 class light_speed(ttk.Frame):
     def __init__(self, master=None):
@@ -28,10 +142,10 @@ class light_speed(ttk.Frame):
         # Title
         ttk.Label(self, text='Velocidad de la luz').grid(row=0, column=1, columnspan=2)
         # Images
-        ttk.Label(self, image=self.luz).grid(row=1, column=0, columnspan=2)
+        ttk.Label(self, image=self.luz).grid(row=1, column=0, columnspan=3)
         #Variables
-        ttk.Label(self, text='Longitud de onda [lambda]').grid(row=3, column=0)
-        ttk.Label(self, text='Frecuencia [v]').grid(row=4, column=0)
+        ttk.Label(self, text='Longitud de onda [lambda] [cm]').grid(row=3, column=0)
+        ttk.Label(self, text='Frecuencia [v] [1/s]').grid(row=4, column=0)
 
     def Botones_luz(self):
         save = ttk.Button(self, text='Guardar',command=self.obtener_entradas_luz)
@@ -98,8 +212,10 @@ class cuerpo_negro(ttk.Frame):
     def Botones(self):
         save = ttk.Button(self, text='Guardar',command=self.obtener_entradas)
         show = ttk.Button(self, text='Calcular', command=self.mostrar)
+        quit3 = ttk.Button(self, text="Salir", command=self.master.destroy)
         save.grid(row=10, column=1)
         show.grid(row=10, column=2)
+        quit3.grid(row=10, column=3)
 
     def imagenes(self):
         # image 1

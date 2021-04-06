@@ -36,7 +36,7 @@ class GUI(ttk.Frame):
     
     def window_radia(self):
         self.newWindow = tk.Toplevel(self.master)
-        self.newWindow.geometry('200x150')
+        self.newWindow.geometry('250x250')
         self.app = window_Radia(self.newWindow)
 
     def window_reynolds(self):
@@ -68,12 +68,16 @@ class window_Radia(ttk.Frame):
         self.forradiacion = ttk.Button(self, text="Formula-Radicion", command=self.managed_windows)
         self.radbblack = ttk.Button(self, text="Radiacion de cuerpo negro", command=self.body_black_radiation)
         self.velocidad_luz = ttk.Button(self,text="Velocidad de la luz",command=self.velocidad_luz_radiation)
+        self.energia_cuantos= ttk.Button(self, text="Energia de los cuantos",command=self.energia_cuantos_radiation)
+        self.mam = ttk.Button(self, text="Masa y momento de las particulas",command = self.mam_radiation)
         self.quit = ttk.Button(self, text="Quit", command=self.master.destroy)
         # Grid the buttons
         self.forradiacion.grid(row=0, column=0)
         self.radbblack.grid(row=1, column=0)
-        self.quit.grid(row=3, column=0)
         self.velocidad_luz.grid(row=2, column=0)
+        self.energia_cuantos.grid(row=3, column=0)
+        self.mam.grid(row=4,column=0)
+        self.quit.grid(row=5, column=0)
     
     def managed_windows(self):
         self.newWindow = tk.Toplevel(self.master)
@@ -90,7 +94,16 @@ class window_Radia(ttk.Frame):
         self.newWindow.title('Velocidad de la luz')
         self.newWindow.geometry('600x500')
         self.app = light_speed(self.newWindow)
-
+    def energia_cuantos_radiation(self):
+        self.newWindow = tk.Toplevel(self.master)
+        self.newWindow.title('Energia de los cuantos discretos')
+        self.newWindow.geometry('600x500')
+        self.app = energia_cuantos(self.newWindow)
+    def mam_radiation(self):
+        self.newWindow = tk.Toplevel(self.master)
+        self.newWindow.title('Masa y momento de las particulas')
+        self.newWindow.geometry('600x500')
+        self.app = mam_particulas(self.newWindow)
 class window_Nusselt(ttk.Frame):
     def __init__(self, master=None):
         super().__init__(master)
