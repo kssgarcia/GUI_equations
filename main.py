@@ -20,6 +20,7 @@ class GUI(ttk.Frame):
         self.reynolds = ttk.Button(self, text="Reynolds", command=self.window_reynolds)
         self.nusselt = ttk.Button(self, text="Nusselt", command=self.window_nusselt)
         self.ext_tub = ttk.Button(self, text="Tubo_ext", command=self.window_ext_tub)
+        self.matriz_ = ttk.Button(self, text="Tabla-orientacion", command=self.Matriz)
         self.quit = ttk.Button(self, text="Salir", command=self.master.destroy)
         # Grid the buttons
         self.Grid_set()
@@ -29,7 +30,8 @@ class GUI(ttk.Frame):
         self.reynolds.grid(row=1, column=0)
         self.nusselt.grid(row=2, column=0)
         self.ext_tub.grid(row=3, column=0)
-        self.quit.grid(row=4, column=0)
+        self.matriz_.grid(row=4, column=0)
+        self.quit.grid(row=5, column=0)
 
     
     def window_radia(self):
@@ -48,6 +50,11 @@ class GUI(ttk.Frame):
         self.newWindow.geometry('400x550')
         self.app = window_Nusselt(self.newWindow)
     def window_ext_tub(self):
+        self.newWindow = tk.Toplevel(self.master)
+        self.newWindow.title('C.Empirica tub ext')
+        self.newWindow.geometry('300x300')
+        self.app = conve_ext_tub(self.newWindow)
+    def Matriz(self):
         self.newWindow = tk.Toplevel(self.master)
         self.newWindow.title('C.Empirica tub ext')
         self.newWindow.geometry('300x300')
@@ -97,6 +104,7 @@ class window_Nusselt(ttk.Frame):
         self.var_4 = ttk.Button(self, text="Nusselt-4", command=self.nuss_4)
         self.var_5 = ttk.Button(self, text="Nusselt-5", command=self.nuss_5)
         self.var_6 = ttk.Button(self, text="Nusselt-6", command=self.nuss_6)
+        self.var_7 = ttk.Button(self, text="Tablas", command=self.Tablas_emp)
         self.quit = ttk.Button(self, text="Salir", command=self.master.destroy)
         # Grid the buttons
         self.var_1.grid(row=1, column=1)
@@ -105,7 +113,8 @@ class window_Nusselt(ttk.Frame):
         self.var_4.grid(row=4, column=1)
         self.var_5.grid(row=5, column=1)
         self.var_6.grid(row=6, column=1)
-        self.quit.grid(row=7, column=1)
+        self.var_7.grid(row=7, column=1)
+        self.quit.grid(row=8, column=1)
     def images(self):
         self.nuss_3img = Image.open("images\\nuss_3.PNG")
         self.nuss_3img = self.nuss_3img.resize((300, 300))
@@ -142,6 +151,11 @@ class window_Nusselt(ttk.Frame):
         self.newWindow.title('Nusselt-6')
         self.newWindow.geometry('800x500')
         self.app = Nusselt_6(self.newWindow)
+    def Tablas_emp(self):
+        self.newWindow = tk.Toplevel(self.master)
+        self.newWindow.title('Tablas empirico')
+        self.newWindow.geometry('1000x800')
+        self.app = Tablas(self.newWindow)
 
 
 class conve_ext_tub(ttk.Frame):
@@ -165,6 +179,6 @@ class conve_ext_tub(ttk.Frame):
 master = ThemedTk(themebg=True)
 #ubuntu
 master.set_theme('breeze')
-master.geometry('200x150')
+master.geometry('200x200')
 app = GUI(master=master)
 app.mainloop()

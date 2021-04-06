@@ -474,3 +474,42 @@ class Nusselt_6(ttk.Frame):
 
     def show(self):
         ttk.Label(self, text=f'{self.nusselt_1}').grid(row=9, column=3)
+
+
+class Tablas(ttk.Frame):
+    def __init__(self, master=None):
+        super().__init__(master)
+        self.pack()
+        # Images 
+        self.images()
+        # Widgets
+        self.labels_pictures()
+
+    def labels_pictures(self):
+        # create the button and set the command
+        # Title
+        ttk.Label(self, text='Tablas').grid(row=0, column=1, columnspan=2)
+        # Images
+        ttk.Label(self, image=self.tabla_1).grid(row=1, column=1)
+        ttk.Label(self, image=self.tabla_2).grid(row=1, column=2)
+        ttk.Label(self, image=self.tabla_3).grid(row=2, column=1)
+        ttk.Label(self, image=self.tabla_4).grid(row=2, column=2)
+        # Variables
+
+    def images(self):
+        # image 1
+        self.tabla_1 = Image.open("images\\Tabla_1_emp.PNG")
+        self.tabla_1 = self.tabla_1.resize((400, 400))
+        self.tabla_1 = ImageTk.PhotoImage(self.tabla_1)
+        # image 2
+        self.tabla_2 = Image.open("images\\Tabla_2_emp.PNG")
+        self.tabla_2 = self.tabla_2.resize((400, 400))
+        self.tabla_2 = ImageTk.PhotoImage(self.tabla_2)
+        # image 3
+        self.tabla_3 = Image.open("images\\Tabla_3_emp.PNG")
+        self.tabla_3 = self.tabla_3.resize((400, 400))
+        self.tabla_3 = ImageTk.PhotoImage(self.tabla_3)
+        # image 4
+        self.tabla_4 = Image.open("images\\Tabla_4_emp.PNG")
+        self.tabla_4 = self.tabla_4.resize((400, 400))
+        self.tabla_4 = ImageTk.PhotoImage(self.tabla_4)
