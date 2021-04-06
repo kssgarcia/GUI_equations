@@ -8,7 +8,7 @@ from Nuss import *
 from Reynold import *
 from Radiation import *
 from Convec_tub_ext import *
-
+from Matriz_orientacion import *
 
 class GUI(ttk.Frame):
     def __init__(self, master=None):
@@ -57,8 +57,8 @@ class GUI(ttk.Frame):
     def Matriz(self):
         self.newWindow = tk.Toplevel(self.master)
         self.newWindow.title('C.Empirica tub ext')
-        self.newWindow.geometry('300x300')
-        self.app = conve_ext_tub(self.newWindow)
+        self.newWindow.geometry('800x800')
+        self.app = Tablas_transfe(self.newWindow)
 
 class window_Radia(ttk.Frame):
     def __init__(self, master=None):
