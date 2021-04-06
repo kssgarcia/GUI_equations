@@ -8,7 +8,7 @@ class Tablas_transfe(ttk.Frame):
     dicta = {'nuss_1': {'Flujo interno', 'Turbulento', 'Tubo liso', 'desarrollado', 'Propiedades fijas', None, 'Formula simple', 'Formula algebraica', 'Seccion tubo entrada',None},
 'nuss_2': {'Flujo interno', 'Turbulento', 'Tubo liso', 'desarrollado', 'Propiedades variables', None, 'Formula simple', 'Formula algebraica', 'Seccion tubo entrada',None},
 'nuss_3': {'Flujo interno', 'Turbulento', 'Tubo liso', 'desarrollado', 'Propiedades fijas', None, 'Formula simple', 'Formula algebraica', 'Seccion tubo entrada',None},
-'nuss_4': {'Flujo interno', 'Turbulento', 'Rugoso', 'desarrollado', None, 'T calor constante', 'compleja',  'Formula algebraica', 'Seccion tubo entrada',None},
+'nuss_4': {'Flujo interno', 'Turbulento', 'rugoso', 'desarrollado', None, 'T calor constante', 'compleja',  'Formula algebraica', 'Seccion tubo entrada',None},
 'nuss_5': {'Flujo interno', 'Laminar', 'Tubo liso', 'desarrollado', None, 'T tubo constante', None,  None, 'Seccion tubo entrada',None},
 'nuss_6': {'Flujo interno', 'Laminar', None, None, 'Propiedades variables', 'T tubo constante', None, None, None,None}}
 
@@ -50,18 +50,15 @@ class Tablas_transfe(ttk.Frame):
 
 
     def get_entries(self):
-        self.combo_values = {self.example_1.get(),self.example_2,self.example_3,self.example_4,self.example_5,self.example_6,self.example_7,self.example_8,self.example_9,self.example_10} 
-        global_e = {0,0,0,0,0,0,0,0}
+        self.combo_values = {self.example_1.get(),self.example_2.get(),self.example_3.get(),self.example_4.get(),self.example_5.get(),self.example_6.get(),self.example_7.get(),self.example_8.get(),self.example_9.get(),self.example_10.get()}
+        global_e = [0,0,0,0,0,0,0,0]
         current = {}
         self.equat = 0
         for key,values in Tablas_transfe.dicta.items():
-            print(values)
-            current = self.combo_values.difference(values)
-            print(current)
+            current = values.difference(self.combo_values)
             if len(list(current)) < len(list(global_e)):
                 global_e = current
                 self.equat = key
-                print(key)
 
     def Buttons(self):
         save = ttk.Button(self, text='Guardar', command=self.get_entries)
