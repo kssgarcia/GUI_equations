@@ -1,4 +1,51 @@
 from sympy import symbols, Eq, solve
+# -------------------- Enegia por longitud de onda de un cuerpo negro ---------------------------------
+class longitud_energia_onda:
+    incog = 0
+    def __init__(self, EBB,londa,T):
+        self.EBB = EBB
+        self.londa = londa
+        self.T = T
+        if self.londa == None:
+            self.londa = symbols('londa')
+            longitud_energia_onda.incog = self.londa
+        elif self.T == None:
+            self.T = symbols('T')
+            longitud_energia_onda.incog = self.T
+        elif self.EBB == None:
+            self.EBB = symbols('EBB')
+            longitud_energia_onda.incog=self.EBB
+    def solucion(self, solv=None):
+        constante1 = 3.743e8 
+        constante2= 1.4837e4
+        constante3 = constante2/(self.londa*self.T)
+        ecuacion_BB = Eq(self.EBB,(constante1*self.londa**(-5))/(2.71828**constante3 - 1))
+        self.solv, *_ = solve(ecuacion_BB, longitud_energia_onda.incog)
+        return f'El valor de {longitud_energia_onda.incog} es de {self.solv}'      
+# -----------------------------------Densidad de energia de la onda -----------------------------------
+class densidad_energia_onda:
+    incog = 0
+
+    def __init__(self, densidad, fr,T):
+        self.densidad = densidad
+        self.fr = fr
+        self.T = T
+        if self.densidad == None:
+            self.densidad = symbols('densidad')
+            densidad_energia_onda.incog = self.densidad
+        elif self.fr == None:
+            self.fr = symbols('fr')
+            densidad_energia_onda.incog = self.fr 
+        elif self.T == None:
+            self.T = symbols('T')
+            densidad_energia_onda.incog = self.T
+
+    def solucion(self, solv=None):
+        cosntante_planck = 6.625e-34 #[J.s]
+        aux1= (cosntante_planck*3e8)/(self.fr*1.38066e-23*self.T)
+        ecuacion_deo = Eq(self.densidad, (8*3.1416*cosntante_planck*3e8*self.fr**(-5))/(2.71828**(aux1)-1))
+        self.solv, *_ = solve(ecuacion_deo, densidad_energia_onda.incog)
+        return f'El valor de {densidad_energia_onda.incog} es de {self.solv}'
 # ----------------------------------- masa y momento particulas-----------------------------------------
 class masam_particulas:
     incog = 0

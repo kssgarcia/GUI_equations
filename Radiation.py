@@ -4,6 +4,61 @@ from tkinter import ttk
 from ttkthemes import ThemedTk
 
 from Transferencia_calor import * 
+class energy_lenght_BB(ttk.Frame):
+    def __init__(self, master=None):
+        super().__init__(master)
+        self.pack()
+        # Images 
+        self.imagenes_BB()
+        # Widgets
+        self.labels_BB()
+        self.Entradas_BB()
+        self.Botones_BB()
+    def Entradas_BB(self):
+     # labels for entries
+        self.EBB = ttk.Entry(self)
+        self.EBB.grid(row=3, column=1, columnspan=2)
+        self.londa = ttk.Entry(self)
+        self.londa.grid(row=4, column=1, columnspan=2) 
+        self.T = ttk.Entry(self)
+        self.T.grid(row=5,column=1,columnspan=2)  
+    def labels_BB(self):
+         # Title
+        ttk.Label(self, text='Energia por longitud de onda de BB').grid(row=0, column=1, columnspan=2)
+        # Images
+        ttk.Label(self, image=self.eb).grid(row=1, column=0, columnspan=3)
+        #Variables
+        ttk.Label(self, text='Energia').grid(row=3, column=0)
+        ttk.Label(self, text='Longitud de onda [micrometros]').grid(row=4, column=0) 
+        ttk.Label(self, text='Temperatura [K]').grid(row=5, column=0)   
+    def Botones_BB(self):
+        save = ttk.Button(self, text='Guardar',command=self.obtener_entradas_BB)
+        show = ttk.Button(self, text='Calcular', command=self.mostrar_BB)
+        quit1 = ttk.Button(self, text="Salir", command=self.master.destroy)
+        save.grid(row=10, column=1)
+        show.grid(row=10, column=2)
+        quit1.grid(row=10, column=3)  
+    def imagenes_BB(self):
+        # image 1
+        self.eb = Image.open("images\\eb.JPG")
+        self.eb = self.eb.resize((250, 150))
+        self.eb = ImageTk.PhotoImage(self.eb)  
+
+    def obtener_entradas_BB(self):
+        self.dictBB_entries = {'EBB': self.EBB.get(),'londa': self.londa.get(), 'T': self.T.get()}
+        for item, value in self.dictBB_entries.items():
+            if value == 'None':
+                self.dictBB_entries[item] = None
+            elif type(value) is str:
+                self.dictBB_entries[item] = float(value)
+        self.BB_ecu(**self.dictBB_entries)
+
+    def BB_ecu(self,EBB, londa, T):
+        self.Energy_BB = longitud_energia_onda(EBB=EBB,londa=londa, T=T)
+
+    def mostrar_BB(self):
+        ttk.Label(self, text=f'{self.Energy_BB.solucion()}').grid(row=11, column=1)
+
 class densidade_onda(ttk.Frame):
     def __init__(self, master=None):
         super().__init__(master)
@@ -13,7 +68,52 @@ class densidade_onda(ttk.Frame):
         # Widgets
         self.labels_donda()
         self.Entradas_donda()
-        self.Botones_donda()    
+        self.Botones_donda()
+    def Entradas_donda(self):
+     # labels for entries
+        self.densidad = ttk.Entry(self)
+        self.densidad.grid(row=3, column=1, columnspan=2)
+        self.fr = ttk.Entry(self)
+        self.fr.grid(row=4, column=1, columnspan=2)    
+        self.T = ttk.Entry(self)
+        self.T.grid(row=5,column=1,columnspan=2)    
+    def labels_donda(self):
+         # Title
+        ttk.Label(self, text='Densidad de energia de la onda').grid(row=0, column=1, columnspan=2)
+        # Images
+        ttk.Label(self, image=self.deo).grid(row=1, column=0, columnspan=3)
+        #Variables
+        ttk.Label(self, text='Densidad [(W·m-2)·m-1]').grid(row=3, column=0)
+        ttk.Label(self, text='Longitud de onda [m]').grid(row=4, column=0) 
+        ttk.Label(self, text='Temperatura [K]').grid(row=5, column=0)   
+    def Botones_donda(self):
+        save = ttk.Button(self, text='Guardar',command=self.obtener_entradas_deo)
+        show = ttk.Button(self, text='Calcular', command=self.mostrar_deo)
+        quit1 = ttk.Button(self, text="Salir", command=self.master.destroy)
+        save.grid(row=10, column=1)
+        show.grid(row=10, column=2)
+        quit1.grid(row=10, column=3)  
+    def imagenes_donda(self):
+        # image 1
+        self.deo = Image.open("images\\deo.JPG")
+        self.deo = self.deo.resize((250, 150))
+        self.deo = ImageTk.PhotoImage(self.deo)  
+
+    def obtener_entradas_deo(self):
+        self.dictdeo_entries = {'densidad': self.densidad.get(), 'fr': self.fr.get(), 'T': self.T.get()}
+        for item, value in self.dictdeo_entries.items():
+            if value == 'None':
+                self.dictdeo_entries[item] = None
+            elif type(value) is str:
+                self.dictdeo_entries[item] = float(value)
+        self.deo_ecu(**self.dictdeo_entries)
+
+    def deo_ecu(self, densidad, fr, T):
+        self.Energy_mam = densidad_energia_onda(densidad=densidad, fr=fr, T=T)
+
+    def mostrar_deo(self):
+        ttk.Label(self, text=f'{self.Energy_mam.solucion()}').grid(row=11, column=1)
+
 class mam_particulas(ttk.Frame):
     def __init__(self, master=None):
         super().__init__(master)
