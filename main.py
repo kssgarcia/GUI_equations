@@ -64,7 +64,7 @@ class GUI(ttk.Frame):
     def window_ext_tub(self):
         self.newWindow = tk.Toplevel(self.master)
         self.newWindow.title('C.Empirica tub ext')
-        self.newWindow.geometry('300x300')
+        self.newWindow.geometry('600x700')
         self.app = conve_ext_tub(self.newWindow)
     def Matriz(self):
         self.newWindow = tk.Toplevel(self.master)
@@ -228,12 +228,14 @@ class conve_ext_tub(ttk.Frame):
         ttk.Label(self, image=self.ext_1).grid(row=0, column=1)
         # create the buttons and set the command
         self.var_1 = ttk.Button(self, text="Fuerza de arrastre", command=self.fuerza_arr)
-        self.var_2 = ttk.Button(self, text="Nusselt-2", command=self.nuss_2)
-        self.var_3 = ttk.Button(self, text="Nusselt-3", command=self.nuss_3)
-        self.var_4 = ttk.Button(self, text="Nusselt-4", command=self.nuss_4)
-        self.var_5 = ttk.Button(self, text="Nusselt-5", command=self.nuss_5)
-        self.var_6 = ttk.Button(self, text="Nusselt-6", command=self.nuss_6)
-        self.var_7 = ttk.Button(self, text="Tablas", command=self.Tablas_emp)
+        self.var_2 = ttk.Button(self, text="Nusselt-1", command=self.nuss_1_ext)
+        self.var_3 = ttk.Button(self, text="Nusselt-2", command=self.nuss_2_ext)
+        self.var_4 = ttk.Button(self, text="Nusselt-3", command=self.nuss_3_ext)
+        self.var_5 = ttk.Button(self, text="Nusselt-4", command=self.nuss_4_ext)
+        self.var_6 = ttk.Button(self, text="Nusselt-5", command=self.nuss_5_ext)
+        self.var_7 = ttk.Button(self, text="Nusselt-6", command=self.nuss_6_ext)
+        self.var_8 = ttk.Button(self, text="Nusselt-7", command=self.nuss_7_ext)
+        self.var_9 = ttk.Button(self, text="Tablas", command=self.Tablas_emp)
         self.quit = ttk.Button(self, text="Salir", command=self.master.destroy)
         # Grid the buttons
         self.var_1.grid(row=1, column=1)
@@ -243,7 +245,9 @@ class conve_ext_tub(ttk.Frame):
         self.var_5.grid(row=5, column=1)
         self.var_6.grid(row=6, column=1)
         self.var_7.grid(row=7, column=1)
-        self.quit.grid(row=8, column=1)
+        self.var_8.grid(row=8, column=1)
+        self.var_9.grid(row=9, column=1)
+        self.quit.grid(row=10, column=1)
     def images(self):
         self.ext_1 = Image.open("images\\ext_tub.PNG")
         self.ext_1 = self.ext_1.resize((400, 400))
@@ -254,36 +258,41 @@ class conve_ext_tub(ttk.Frame):
         self.newWindow.title('Fuerza de arrastre')
         self.newWindow.geometry('600x600')
         self.app = fuerza_arrastre(self.newWindow)
-    def nuss_1(self):
+    def nuss_1_ext(self):
         self.newWindow = tk.Toplevel(self.master)
         self.newWindow.title('Nusselt-1')
-        self.newWindow.geometry('600x300')
-        self.app = Nusselt_1(self.newWindow)
-    def nuss_2(self):
+        self.newWindow.geometry('700x500')
+        self.app = Nusselt_1_ext(self.newWindow)
+    def nuss_2_ext(self):
         self.newWindow = tk.Toplevel(self.master)
         self.newWindow.title('Nusselt-2')
-        self.newWindow.geometry('700x450')
-        self.app = Nusselt_2(self.newWindow)
-    def nuss_3(self):
+        self.newWindow.geometry('700x350')
+        self.app = Nusselt_2_ext(self.newWindow)
+    def nuss_3_ext(self):
         self.newWindow = tk.Toplevel(self.master)
         self.newWindow.title('Nusselt-3')
         self.newWindow.geometry('700x450')
-        self.app = Nusselt_3(self.newWindow)
-    def nuss_4(self):
+        self.app = Nusselt_3_ext(self.newWindow)
+    def nuss_4_ext(self):
         self.newWindow = tk.Toplevel(self.master)
         self.newWindow.title('Nusselt-4')
         self.newWindow.geometry('700x550')
-        self.app = Nusselt_4(self.newWindow)
-    def nuss_5(self):
+        self.app = Nusselt_4_ext(self.newWindow)
+    def nuss_5_ext(self):
         self.newWindow = tk.Toplevel(self.master)
         self.newWindow.title('Nusselt-5')
         self.newWindow.geometry('700x450')
-        self.app = Nusselt_5(self.newWindow)
-    def nuss_6(self):
+        self.app = Nusselt_5_ext(self.newWindow)
+    def nuss_6_ext(self):
         self.newWindow = tk.Toplevel(self.master)
         self.newWindow.title('Nusselt-6')
         self.newWindow.geometry('800x500')
-        self.app = Nusselt_6(self.newWindow)
+        self.app = Nusselt_6_ext(self.newWindow)
+    def nuss_7_ext(self):
+        self.newWindow = tk.Toplevel(self.master)
+        self.newWindow.title('Nusselt-6')
+        self.newWindow.geometry('800x500')
+        self.app = Nusselt_7_ext(self.newWindow)
     def Tablas_emp(self):
         self.newWindow = tk.Toplevel(self.master)
         self.newWindow.title('Tablas empirico')

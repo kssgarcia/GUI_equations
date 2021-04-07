@@ -1,235 +1,244 @@
-from sympy import symbols, Eq, solve
+from sympy import symbols, Eq, solve, log
 
 
 class Nusselt1_ext():
     incog = 0
 
-    def __init__(self, nuss, Re, Pr, n):
-        self.nuss = nuss
-        self.Re = Re
-        self.Pr = Pr
+    def __init__(self, h, d, k, C, U, Uf, n, Pr):
+        self.h = h
+        self.d = d
+        self.k = k
+        self.C = C
+        self.U = U
+        self.Uf = Uf
         self.n = n
-        if self.nuss == None:
-            self.nuss = symbols('nuss')
-            Nusselt1_ext.incog = self.nuss
-        elif self.Re == None:
-            self.Re = symbols('Re')
-            Nusselt1_ext.incog = self.Re
-        elif self.Pr == None:
-            self.Pr = symbols('Pr')
-            Nusselt1_ext.incog = self.Pr
+        self.Pr =Pr
+        if self.h == None:
+            self.h = symbols('h')
+            Nusselt1_ext.incog = self.h
+        elif self.d == None:
+            self.d = symbols('d')
+            Nusselt1_ext.incog = self.d
+        elif self.k == None:
+            self.k = symbols('k')
+            Nusselt1_ext.incog = self.k
+        elif self.C == None:
+            self.C = symbols('C')
+            Nusselt1_ext.incog = self.C
+        elif self.U == None:
+            self.U = symbols('U')
+            Nusselt1_ext.incog = self.U
+        elif self.Uf == None:
+            self.Uf = symbols('Uf')
+            Nusselt1_ext.incog = self.Uf
         elif self.n == None:
             self.n = symbols('n')
             Nusselt1_ext.incog = self.n
+        elif self.Pr == None:
+            self.Pr = symbols('Pr')
+            Nusselt1_ext.incog = self.Pr
 
-    def NPr(self):
-        N_Pr = (0.023*(self.Re**0.8)*self.Pr**self.n)
+    def lado_izq(self):
+        N_Pr = (self.h*self.d)/self.k
         return N_Pr
 
+    def lado_der(self):
+        N_P = self.C*(((self.U*self.d)/self.Uf)**self.n)*self.Pr**0.3333
+        return N_P
+
     def solucion_total(self):
-        ecuacion = Eq(self.NPr(), self.nuss)
+        ecuacion = Eq(self.lado_izq(), self.lado_der())
         self.solv, *_ = solve(ecuacion, Nusselt1_ext.incog)
         return f'El valor de {Nusselt1_ext.incog} es de {self.solv}'
 
-class Nusselt2():
+class Nusselt2_ext():
     incog = 0
 
-    def __init__(self, nuss, Re, Pr, U, Um):
+    def __init__(self, nuss, Re, Pr):
         self.nuss = nuss
         self.Re = Re
         self.Pr = Pr
-        self.U = U
-        self.Um = Um
         if self.nuss == None:
             self.nuss = symbols('nuss')
-            Nusselt2.incog = self.nuss
+            Nusselt2_ext.incog = self.nuss
         elif self.Re == None:
             self.Re = symbols('Re')
-            Nusselt2.incog = self.Re
+            Nusselt2_ext.incog = self.Re
         elif self.Pr == None:
             self.Pr = symbols('Pr')
-            Nusselt2.incog = self.Pr
-        elif self.U == None:
-            self.U = symbols('U')
-            Nusselt2.incog = self.U
-        elif self.Um == None:
-            self.Um = symbols('Um')
-            Nusselt2.incog = self.Um
+            Nusselt2_ext.incog = self.Pr
 
     def NPr(self):
-        N_Pr = (0.027*(self.Re**0.8)*self.Pr**0.33)*((self.U/self.Um)**0.14)
+        N_Pr = (0.35 + 0.56*self.Re**0.52)*self.Pr*0.3
         return N_Pr
 
     def solucion_total(self):
         ecuacion = Eq(self.NPr(), self.nuss)
-        self.solv, *_ = solve(ecuacion, Nusselt2.incog)
-        return f'El valor de {Nusselt2.incog} es de {self.solv}'
+        self.solv, *_ = solve(ecuacion, Nusselt2_ext.incog)
+        return f'El valor de {Nusselt2_ext.incog} es de {self.solv}'
 
     def __str__(self):
         return self.solucion_total()
 
-class Nusselt3():
+class Nusselt3_ext():
     incog = 0
 
-    def __init__(self, Re, nuss, Pr, d, L):
+    def __init__(self, Re, nuss, Pr, Prf, Prw):
         self.nuss = nuss
         self.Re = Re
         self.Pr = Pr
-        self.d = d
-        self.L = L
+        self.Prf = Prf
+        self.Prw = Prw
         if self.nuss == None:
             self.nuss = symbols('nuss')
-            Nusselt3.incog = self.nuss
+            Nusselt3_ext.incog = self.nuss
         elif self.Re == None:
             self.Re = symbols('Re')
-            Nusselt3.incog = self.Re
+            Nusselt3_ext.incog = self.Re
         elif self.Pr == None:
             self.Pr = symbols('Pr')
-            Nusselt3.incog = self.Pr
-        elif self.d == None:
-            self.d = symbols('d')
-            Nusselt3.incog = self.d
-        elif self.L == None:
-            self.L = symbols('L')
-            Nusselt3.incog = self.L
+            Nusselt3_ext.incog = self.Pr
+        elif self.Prf == None:
+            self.Prf = symbols('Prf')
+            Nusselt3_ext.incog = self.Prf
+        elif self.Prw == None:
+            self.Prw = symbols('Prw')
+            Nusselt3_ext.incog = self.Prw
 
     def NPr(self):
-        N_Pr = (0.036*(self.Re**0.8)*self.Pr**0.333)*((self.d/self.L)**0.055)
+        N_Pr = (0.43 + 0.50*self.Re**0.50)*(self.Pr*0.38)*(self.Prf/self.Prw)**0.25
         return N_Pr
 
     def solucion_total(self):
         ecuacion = Eq(self.NPr(), self.nuss)
-        self.solv, *_ = solve(ecuacion, Nusselt3.incog)
-        return f'El valor de {Nusselt3.incog} es de {self.solv}'
+        self.solv, *_ = solve(ecuacion, Nusselt3_ext.incog)
+        return f'El valor de {Nusselt3_ext.incog} es de {self.solv}'
 
     def __str__(self):
         return self.solucion_total()
 
-class Nusselt4():
+class Nusselt4_ext():
     incog = 0
 
-    def __init__(self, nuss, Re, Pr, Ub, Uw, n, f):
+    def __init__(self, Re, nuss, Pr, Prf, Prw):
         self.nuss = nuss
         self.Re = Re
         self.Pr = Pr
-        self.Ub = Ub
-        self.Uw = Uw
-        self.n = n
-        self.f = f
+        self.Prf = Prf
+        self.Prw = Prw
         if self.nuss == None:
             self.nuss = symbols('nuss')
-            Nusselt4.incog = self.nuss
+            Nusselt4_ext.incog = self.nuss
         elif self.Re == None:
             self.Re = symbols('Re')
-            Nusselt4.incog = self.Re
+            Nusselt4_ext.incog = self.Re
         elif self.Pr == None:
             self.Pr = symbols('Pr')
-            Nusselt4.incog = self.Pr
-        elif self.Ub == None:
-            self.Ub = symbols('Ub')
-            Nusselt4.incog = self.Ub
-        elif self.Uw == None:
-            self.Uw = symbols('Uw')
-            Nusselt4.incog = self.Uw
-        elif self.n == None:
-            self.n = symbols('n')
-            Nusselt4.incog = self.n
-        elif self.f == None:
-            self.f = symbols('f')
-            Nusselt4.incog = self.f
+            Nusselt4_ext.incog = self.Pr
+        elif self.Prf == None:
+            self.Prf = symbols('Prf')
+            Nusselt4_ext.incog = self.Prf
+        elif self.Prw == None:
+            self.Prw = symbols('Prw')
+            Nusselt4_ext.incog = self.Prw
 
     def NPr(self):
-        g = (self.f/8)
-        N_Pr = ((g*self.Re*self.Pr)/(1.07+12.7*pow(g,0.5)*(pow(self.Pr,0.667)-1)))*(self.Ub/self.Uw)**self.n
+        N_Pr = (0.25*self.Re**0.60)*(self.Pr*0.38)*(self.Prf/self.Prw)**0.25
         return N_Pr
 
     def solucion_total(self):
         ecuacion = Eq(self.NPr(), self.nuss)
-        self.solv, *_ = solve(ecuacion, Nusselt4.incog)
-        return f'El valor de {Nusselt4.incog} es de {self.solv}'
+        self.solv, *_ = solve(ecuacion, Nusselt4_ext.incog)
+        return f'El valor de {Nusselt4_ext.incog} es de {self.solv}'
 
     def __str__(self):
         return self.solucion_total()
 
-class Nusselt5():
+class Nusselt5_ext():
     incog = 0
 
-    def __init__(self, nuss, Re, Pr, d, L):
+    def __init__(self, nuss, Re, Pr):
         self.nuss = nuss
         self.Re = Re
         self.Pr = Pr
-        self.d = d
-        self.L = L
         if self.nuss == None:
             self.nuss = symbols('nuss')
-            Nusselt5.incog = self.nuss
+            Nusselt5_ext.incog = self.nuss
         elif self.Re == None:
             self.Re = symbols('Re')
-            Nusselt5.incog = self.Re
+            Nusselt5_ext.incog = self.Re
         elif self.Pr == None:
             self.Pr = symbols('Pr')
-            Nusselt5.incog = self.Pr
-        elif self.d == None:
-            self.d = symbols('d')
-            Nusselt5.incog = self.d
-        elif self.L == None:
-            self.L = symbols('L')
-            Nusselt5.incog = self.L
+            Nusselt5_ext.incog = self.Pr
 
     def NPr(self):
-        g = (self.d/self.L)
-        N_Pr = 3.66 + ((0.0668*g*self.Re*self.Pr)/(1+0.04*(g*self.Re*self.Pr)**0.667))
-        return N_Pr
+        N_Pr = 0.3 + (((0.62*pow(self.Re,0.5)*pow(self.Pr,0.333))/((1+(0.4/self.Pr)**0.6667))**0.75))
+        a = N_Pr * (1 + (self.Re/282000)**0.625)**0.8
+        return a
 
     def solucion_total(self):
         ecuacion = Eq(self.NPr(), self.nuss)
-        self.solv, *_ = solve(ecuacion, Nusselt5.incog)
-        return f'El valor de {Nusselt5.incog} es de {self.solv}'
+        self.solv, *_ = solve(ecuacion, Nusselt5_ext.incog)
+        return f'El valor de {Nusselt5_ext.incog} es de {self.solv}'
 
     def __str__(self):
         return self.solucion_total()
 
-class Nusselt6():
+class Nusselt6_ext():
     incog = 0
 
-    def __init__(self, nuss, Re, Pr, d, L, U, Um):
+    def __init__(self, nuss, Re, Pr):
         self.nuss = nuss
         self.Re = Re
         self.Pr = Pr
-        self.U = U
-        self.Um = Um
-        self.d = d
-        self.L =L
         if self.nuss == None:
             self.nuss = symbols('nuss')
-            Nusselt6.incog = self.nuss
+            Nusselt6_ext.incog = self.nuss
         elif self.Re == None:
             self.Re = symbols('Re')
-            Nusselt6.incog = self.Re
+            Nusselt6_ext.incog = self.Re
         elif self.Pr == None:
             self.Pr = symbols('Pr')
-            Nusselt6.incog = self.Pr
-        elif self.U == None:
-            self.U = symbols('U')
-            Nusselt6.incog = self.U
-        elif self.Um == None:
-            self.Um = symbols('Um')
-            Nusselt6.incog = self.Um
-        elif self.d == None:
-            self.d = symbols('d')
-            Nusselt6.incog = self.d
-        elif self.L == None:
-            self.L = symbols('L')
-            Nusselt6.incog = self.L
+            Nusselt6_ext.incog = self.Pr
 
     def NPr(self):
-        N_Pr = (1.86*((self.Re*self.Pr)**0.333))*((self.d/self.L)**0.33)*((self.U/self.Um)**0.14)
-        return N_Pr
+        N_Pr = 0.3 + (((0.62*pow(self.Re,0.5)*pow(self.Pr,0.333))/((1+(0.4/self.Pr)**0.6667))**0.75))
+        a = N_Pr * (1 + (self.Re/282000)**0.5)
+        return a
+
 
     def solucion_total(self):
         ecuacion = Eq(self.NPr(), self.nuss)
-        self.solv, *_ = solve(ecuacion, Nusselt6.incog)
-        return f'El valor de {Nusselt6.incog} es de {self.solv}'
+        self.solv, *_ = solve(ecuacion, Nusselt6_ext.incog)
+        return f'El valor de {Nusselt6_ext.incog} es de {self.solv}'
 
     def __str__(self):
         return self.solucion_total()
+
+class Nusselt7_ext():
+    incog = 0
+
+    def __init__(self, nuss, Ped):
+        self.nuss = nuss
+        self.Ped = Ped
+        if self.nuss == None:
+            self.nuss = symbols('nuss')
+            Nusselt7_ext.incog = self.nuss
+        elif self.Ped == None:
+            self.Ped = symbols('Ped')
+            Nusselt7_ext.incog = self.Ped
+
+    def NPr(self):
+        N_Pr = (0.8237 - log(self.Ped**0.5))**-1
+        return N_Pr
+
+
+    def solucion_total(self):
+        ecuacion = Eq(self.NPr(), self.nuss)
+        self.solv, *_ = solve(ecuacion, Nusselt7_ext.incog)
+        return f'El valor de {Nusselt7_ext.incog} es de {self.solv}'
+
+    def __str__(self):
+        return self.solucion_total()
+
+
