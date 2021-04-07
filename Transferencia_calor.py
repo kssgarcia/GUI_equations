@@ -455,6 +455,7 @@ class Nusselt6():
     def __str__(self):
         return self.solucion_total()
 
+
 class fuerza_arrast():
     incog = 0
 
@@ -497,6 +498,39 @@ class fuerza_arrast():
         return self.solucion_total()
 
 
+class convecc_h():
+    incog = 0
+
+    def __init__(self, nuss, d, h, k):
+        self.nuss = nuss
+        self.d  =d
+        self.h = h
+        self.k = k
+        if self.nuss == None:
+            self.nuss = symbols('nuss')
+            convecc_h.incog = self.nuss
+        elif self.d == None:
+            self.d = symbols('d')
+            convecc_h.incog = self.d
+        elif self.h == None:
+            self.h = symbols('h')
+            convecc_h.incog = self.h
+        elif self.k == None:
+            self.k = symbols('k')
+            convecc_h.incog = self.k
+
+    def lado_izq(self):
+        izq = (self.h*self.d)/(self.k)
+        return izq
+
+    def solucion_total(self):
+        ecuacion = Eq(self.lado_izq(), self.nuss)
+        self.solv, *r = solve(ecuacion, convecc_h.incog)
+        return f'El valor de {convecc_h.incog} es de {self.solv}'
+
+    def __str__(self):
+        return self.solucion_total()
+
 if __name__ == '__main__':
-    nuss_1 = fuerza_arrast(Fd=87, Cd=87, A=97, densi=87, U=None, g=421)
+    nuss_1 = Nusselt6(nuss=54, Re=87, Pr=54, d=87, L=87, U=87, Um=None)
     print(nuss_1)

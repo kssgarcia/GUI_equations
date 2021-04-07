@@ -19,10 +19,11 @@ class GUI(ttk.Frame):
         # create the button and set the command
         self.radiacion = ttk.Button(self, text="Radiacion", command=self.window_radia)
         self.reynolds = ttk.Button(self, text="Reynolds", command=self.window_reynolds)
-        self.nusselt = ttk.Button(self, text="Nusselt", command=self.window_nusselt)
+        self.nusselt = ttk.Button(self, text="Tub-int", command=self.window_nusselt)
         self.ext_tub = ttk.Button(self, text="Tubo_ext", command=self.window_ext_tub)
         self.matriz_ = ttk.Button(self, text="Tabla-orientacion", command=self.Matriz)
-        self.propiedades = ttk.Button(self, text="Propiedades-aire-agua", command=self.tabla_pro)
+        self.propiedades = ttk.Button(self, text="Propiedades-aire-agua-K", command=self.tabla_pro)
+        self.propiedades_c = ttk.Button(self, text="Propiedades-aire-agua-°C", command=self.tabla_pro_c)
         self.h_convec = ttk.Button(self, text="h_conveccion", command=self.h_conve)
         self.quit = ttk.Button(self, text="Salir", command=self.master.destroy)
         # Grid the buttons
@@ -35,8 +36,9 @@ class GUI(ttk.Frame):
         self.ext_tub.grid(row=3, column=0)
         self.matriz_.grid(row=4, column=0)
         self.propiedades.grid(row=5, column=0)
-        self.h_convec.grid(row=6, column=0)
-        self.quit.grid(row=7, column=0)
+        self.propiedades_c.grid(row=6, column=0)
+        self.h_convec.grid(row=7, column=0)
+        self.quit.grid(row=8, column=0)
     
     def window_radia(self):
         self.newWindow = tk.Toplevel(self.master)
@@ -65,14 +67,19 @@ class GUI(ttk.Frame):
         self.app = Tablas_transfe(self.newWindow)
     def tabla_pro(self):
         self.newWindow = tk.Toplevel(self.master)
-        self.newWindow.title('Tablas-Propiedades')
+        self.newWindow.title('Tablas-Propiedades-k')
         self.newWindow.geometry('900x550')
         self.app = propiedades_flujo(self.newWindow)
     def h_conve(self):
         self.newWindow = tk.Toplevel(self.master)
         self.newWindow.title('h-conveccion')
-        self.newWindow.geometry('900x550')
+        self.newWindow.geometry('500x500')
         self.app = h_conveccion(self.newWindow)
+    def tabla_pro_c(self):
+        self.newWindow = tk.Toplevel(self.master)
+        self.newWindow.title('Tablas_Propiedades-°C')
+        self.newWindow.geometry('900x550')
+        self.app = propiedades_flujo_c(self.newWindow)
 
 class window_Radia(ttk.Frame):
     def __init__(self, master=None):
@@ -234,12 +241,29 @@ class propiedades_flujo(ttk.Frame):
         self.pro_2 = self.pro_2.resize((450, 450))
         self.pro_2 = ImageTk.PhotoImage(self.pro_2)
 
+class propiedades_flujo_c(ttk.Frame):
+    def __init__(self, master=None):
+        super().__init__(master)
+        self.pack()
+        self.images()
+        # Images
+        ttk.Label(self, image=self.proc_1).grid(row=1, column=0)
+        ttk.Label(self, image=self.proc_2).grid(row=1, column=1)
 
+    def images(self):
+        # image 1
+        self.proc_1 = Image.open("images\\tabl_1_c.PNG")
+        self.proc_1 = self.proc_1.resize((450, 450))
+        self.proc_1 = ImageTk.PhotoImage(self.proc_1)
+        # image 2
+        self.proc_2 = Image.open("images\\tabl_2_c.PNG")
+        self.proc_2 = self.proc_2.resize((450, 450))
+        self.proc_2 = ImageTk.PhotoImage(self.proc_2)
 
 
 master = ThemedTk(themebg=True)
 #ubuntu
 master.set_theme('breeze')
-master.geometry('200x250')
+master.geometry('200x300')
 app = GUI(master=master)
 app.mainloop()

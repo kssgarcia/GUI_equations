@@ -21,37 +21,36 @@ class h_conveccion(ttk.Frame):
     def labels_pictures(self):
         # create the button and set the command
         # Title
-        ttk.Label(self, text='Nusselt').grid(row=0, column=1, columnspan=2)
+        ttk.Label(self, text='h-conveccion').grid(row=0, column=1, columnspan=2)
         # Images
-        ttk.Label(self, image=self.nuss_1).grid(row=1, column=0)
-        ttk.Label(self, image=self.nuss_2).grid(row=1, column=2)
+        ttk.Label(self, image=self.h_1).grid(row=1, column=1)
         # Variables
-        ttk.Label(self, text='Re').grid(row=3, column=0)
-        ttk.Label(self, text='nuss').grid(row=4, column=0)
-        ttk.Label(self, text='Pr').grid(row=7, column=0)
-        ttk.Label(self, text='n').grid(row=8, column=0)
+        ttk.Label(self, text='nuss').grid(row=3, column=0)
+        ttk.Label(self, text='h[w/m^2*°C]').grid(row=4, column=0)
+        ttk.Label(self, text='k[w/m*°C]').grid(row=7, column=0)
+        ttk.Label(self, text='d[m]').grid(row=8, column=0)
         # button to q
         ttk.Button(self, text="Salir", command=self.master.destroy).grid(row=11,column=0)
 
 
     def Entries(self):
         # labels for entries
-        self.Re = ttk.Entry(self)
-        self.Re.grid(row=3, column=1, columnspan=2)
-
         self.nuss = ttk.Entry(self)
-        self.nuss.grid(row=4, column=1, columnspan=2)
+        self.nuss.grid(row=3, column=1, columnspan=2)
 
-        self.Pr = ttk.Entry(self)
-        self.Pr.grid(row=7, column=1, columnspan=2)
+        self.h = ttk.Entry(self)
+        self.h.grid(row=4, column=1, columnspan=2)
 
-        self.n = ttk.Entry(self)
-        self.n.grid(row=8, column=1, columnspan=2)
+        self.k = ttk.Entry(self)
+        self.k.grid(row=7, column=1, columnspan=2)
+
+        self.d = ttk.Entry(self)
+        self.d.grid(row=8, column=1, columnspan=2)
     
 
 
     def get_entries(self):
-        self.dict_entries = {'Re': self.Re.get(), 'nuss': self.nuss.get(), 'Pr': self.Pr.get(), 'n': self.n.get()}
+        self.dict_entries = {'h': self.h.get(), 'nuss': self.nuss.get(), 'k': self.k.get(), 'd': self.d.get()}
         for item, value in self.dict_entries.items():
             if value == 'None':
                 self.dict_entries[item] = None
@@ -69,16 +68,15 @@ class h_conveccion(ttk.Frame):
 
     def images(self):
         # image 1
-        self.nuss_1 = Image.open("images\\nuss_1.PNG")
-        self.nuss_1 = self.nuss_1.resize((200, 50))
-        self.nuss_1 = ImageTk.PhotoImage(self.nuss_1)
-        # image 2
-        self.nuss_2 = Image.open("images\\nuss_2.PNG")
-        self.nuss_2 = self.nuss_2.resize((200, 50))
-        self.nuss_2 = ImageTk.PhotoImage(self.nuss_2)
+        self.h_1 = Image.open("images\\h_convecc.PNG")
+        self.h_1 = self.h_1.resize((200, 200))
+        self.h_1 = ImageTk.PhotoImage(self.h_1)
 
-    def equation(self, Re, nuss, Pr, n):
-        self.Nusselt_1 = Nusselt1(Re=Re, nuss=nuss, Pr=Pr, n=n)
+
+    def equation(self, nuss, d, h, k):
+        self.Nusselt_1 = convecc_h(nuss=nuss, d=d, h=h, k=k)
 
     def show(self):
         ttk.Label(self, text=f'{self.Nusselt_1.solucion_total()}').grid(row=9, column=4)
+
+
