@@ -252,6 +252,7 @@ class Nusselt_4(ttk.Frame):
         ttk.Label(self, text='Nusselt-4').grid(row=0, column=1, columnspan=2)
         # Images
         ttk.Label(self, image=self.nuss_6img).grid(row=1, column=1)
+        ttk.Label(self, image=self.nuss_44img).grid(row=2, column=1)
         # Variables
         ttk.Label(self, text='Re').grid(row=3, column=0)
         ttk.Label(self, text='nuss').grid(row=4, column=0)
@@ -308,8 +309,12 @@ class Nusselt_4(ttk.Frame):
 
     def images(self):
         self.nuss_6img = Image.open("images\\nuss_6.PNG")
-        self.nuss_6img = self.nuss_6img.resize((400, 200))
+        self.nuss_6img = self.nuss_6img.resize((420, 200))
         self.nuss_6img = ImageTk.PhotoImage(self.nuss_6img)
+
+        self.nuss_44img = Image.open("images\\nuss_4.4.PNG")
+        self.nuss_44img = self.nuss_44img.resize((550, 30))
+        self.nuss_44img = ImageTk.PhotoImage(self.nuss_44img)
 
     def equation(self, nuss, Re, Pr, Ub, Uw, n, f):
         self.nusselt_1 = Nusselt4(nuss=nuss, Re=Re, Pr=Pr, Ub=Ub, Uw=Uw, n=n, f=f)

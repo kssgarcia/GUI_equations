@@ -10,6 +10,8 @@ from Radiation import *
 from Convec_tub_ext import *
 from Matriz_orientacion import *
 from conve_h import *
+from q_tranferencia import *
+
 
 class GUI(ttk.Frame):
     def __init__(self, master=None):
@@ -25,6 +27,8 @@ class GUI(ttk.Frame):
         self.propiedades = ttk.Button(self, text="Propiedades-aire-agua-K", command=self.tabla_pro)
         self.propiedades_c = ttk.Button(self, text="Propiedades-aire-agua-°C", command=self.tabla_pro_c)
         self.h_convec = ttk.Button(self, text="h_conveccion", command=self.h_conve)
+        self.q_h = ttk.Button(self, text="q con h", command=self.q_coeficiente)
+        self.q_masico = ttk.Button(self, text="q-flujo masico", command=self.q_masic)
         self.quit = ttk.Button(self, text="Salir", command=self.master.destroy)
         # Grid the buttons
         self.Grid_set()
@@ -38,7 +42,9 @@ class GUI(ttk.Frame):
         self.propiedades.grid(row=5, column=0)
         self.propiedades_c.grid(row=6, column=0)
         self.h_convec.grid(row=7, column=0)
-        self.quit.grid(row=8, column=0)
+        self.q_h.grid(row=8, column=0)
+        self.q_masico.grid(row=9, column=0)
+        self.quit.grid(row=10, column=0)
     
     def window_radia(self):
         self.newWindow = tk.Toplevel(self.master)
@@ -80,6 +86,14 @@ class GUI(ttk.Frame):
         self.newWindow.title('Tablas_Propiedades-°C')
         self.newWindow.geometry('900x550')
         self.app = propiedades_flujo_c(self.newWindow)
+    def q_coeficiente(self):
+        self.newWindow = tk.Toplevel(self.master)
+        self.newWindow.geometry('600x450')
+        self.app = q_coefic(self.newWindow)
+    def q_masic(self):
+        self.newWindow = tk.Toplevel(self.master)
+        self.newWindow.geometry('600x400')
+        self.app = q_masic(self.newWindow)
 
 class window_Radia(ttk.Frame):
     def __init__(self, master=None):
@@ -264,6 +278,6 @@ class propiedades_flujo_c(ttk.Frame):
 master = ThemedTk(themebg=True)
 #ubuntu
 master.set_theme('breeze')
-master.geometry('200x300')
+master.geometry('200x350')
 app = GUI(master=master)
 app.mainloop()

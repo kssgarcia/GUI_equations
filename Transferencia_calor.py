@@ -531,6 +531,89 @@ class convecc_h():
     def __str__(self):
         return self.solucion_total()
 
+
+class coeficien_q():
+    incog = 0
+
+    def __init__(self, q, d, h, Tw, Tb1, Tb2, L):
+        self.q = q
+        self.d  =d
+        self.h = h
+        self.Tw = Tw
+        self.Tb1 = Tb1
+        self.Tb2 = Tb2
+        self.L = L
+        if self.q == None:
+            self.q = symbols('q')
+            coeficien_q.incog = self.q
+        elif self.d == None:
+            self.d = symbols('d')
+            coeficien_q.incog = self.d
+        elif self.h == None:
+            self.h = symbols('h')
+            coeficien_q.incog = self.h
+        elif self.Tw == None:
+            self.Tw = symbols('Tw')
+            coeficien_q.incog = self.Tw
+        elif self.Tb1 == None:
+            self.Tb1 = symbols('Tb1')
+            coeficien_q.incog = self.Tb1
+        elif self.Tb2 == None:
+            self.Tb2 = symbols('Tb2')
+            coeficien_q.incog = self.Tb2
+        elif self.L == None:
+            self.L = symbols('L')
+            coeficien_q.incog = self.L
+
+    def lado_izq(self):
+        izq = (self.h*3.141216*self.d*self.L)*(self.Tw-(self.Tb1+self.Tb2)/2)
+        return izq
+
+    def solucion_total(self):
+        ecuacion = Eq(self.lado_izq(), self.q)
+        self.solv, *r = solve(ecuacion, coeficien_q.incog)
+        return f'El valor de {coeficien_q.incog} es de {self.solv}'
+
+    def __str__(self):
+        return self.solucion_total()
+
+
+class q_masi():
+    incog = 0
+
+    def __init__(self, q, m, Cp, Tb1, Tb2):
+        self.q = q
+        self.Cp = Cp
+        self.m = m
+        self.Tb1 = Tb1
+        self.Tb2 = Tb2
+        if self.q == None:
+            self.q = symbols('q')
+            q_masi.incog = self.q
+        elif self.m == None:
+            self.m = symbols('m')
+            q_masi.incog = self.m
+        elif self.Cp == None:
+            self.Cp = symbols('Cp')
+            q_masi.incog = self.Cp
+        elif self.Tb1 == None:
+            self.Tb1 = symbols('Tb1')
+            q_masi.incog = self.Tb1
+        elif self.Tb2 == None:
+            self.Tb2 = symbols('Tb2')
+            q_masi.incog = self.Tb2
+
+    def lado_izq(self):
+        izq = self.m*self.Cp*(self.Tb2 - self.Tb1)
+        return izq
+
+    def solucion_total(self):
+        ecuacion = Eq(self.lado_izq(), self.q)
+        self.solv, *r = solve(ecuacion, q_masi.incog)
+        return f'El valor de {q_masi.incog} es de {self.solv}'
+
+    def __str__(self):
+        return self.solucion_total()
 if __name__ == '__main__':
-    nuss_1 = Nusselt6(nuss=54, Re=87, Pr=54, d=87, L=87, U=87, Um=None)
+    nuss_1 = q_masi( q=None, m=4, Cp=45, Tb1=87, Tb2=54)
     print(nuss_1)
