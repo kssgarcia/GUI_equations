@@ -9,6 +9,7 @@ from Reynold import *
 from Radiation import *
 from Convec_tub_ext import *
 from Matriz_orientacion import *
+from conve_h import *
 
 class GUI(ttk.Frame):
     def __init__(self, master=None):
@@ -21,6 +22,8 @@ class GUI(ttk.Frame):
         self.nusselt = ttk.Button(self, text="Nusselt", command=self.window_nusselt)
         self.ext_tub = ttk.Button(self, text="Tubo_ext", command=self.window_ext_tub)
         self.matriz_ = ttk.Button(self, text="Tabla-orientacion", command=self.Matriz)
+        self.propiedades = ttk.Button(self, text="Propiedades-aire-agua", command=self.tabla_pro)
+        self.h_convec = ttk.Button(self, text="h_conveccion", command=self.h_conve)
         self.quit = ttk.Button(self, text="Salir", command=self.master.destroy)
         # Grid the buttons
         self.Grid_set()
@@ -31,8 +34,9 @@ class GUI(ttk.Frame):
         self.nusselt.grid(row=2, column=0)
         self.ext_tub.grid(row=3, column=0)
         self.matriz_.grid(row=4, column=0)
-        self.quit.grid(row=5, column=0)
-
+        self.propiedades.grid(row=5, column=0)
+        self.h_convec.grid(row=6, column=0)
+        self.quit.grid(row=7, column=0)
     
     def window_radia(self):
         self.newWindow = tk.Toplevel(self.master)
@@ -59,6 +63,16 @@ class GUI(ttk.Frame):
         self.newWindow.title('C.Empirica tub ext')
         self.newWindow.geometry('800x800')
         self.app = Tablas_transfe(self.newWindow)
+    def tabla_pro(self):
+        self.newWindow = tk.Toplevel(self.master)
+        self.newWindow.title('Tablas-Propiedades')
+        self.newWindow.geometry('900x550')
+        self.app = propiedades_flujo(self.newWindow)
+    def h_conve(self):
+        self.newWindow = tk.Toplevel(self.master)
+        self.newWindow.title('h-conveccion')
+        self.newWindow.geometry('900x550')
+        self.app = h_conveccion(self.newWindow)
 
 class window_Radia(ttk.Frame):
     def __init__(self, master=None):
@@ -175,10 +189,31 @@ class conve_ext_tub(ttk.Frame):
         self.newWindow.geometry('600x600')
         self.app = fuerza_arrastre(self.newWindow)
 
+class propiedades_flujo(ttk.Frame):
+    def __init__(self, master=None):
+        super().__init__(master)
+        self.pack()
+        self.images()
+        # Images
+        ttk.Label(self, image=self.pro_1).grid(row=1, column=0)
+        ttk.Label(self, image=self.pro_2).grid(row=1, column=1)
+
+    def images(self):
+        # image 1
+        self.pro_1 = Image.open("images\\Pro_aire.PNG")
+        self.pro_1 = self.pro_1.resize((450, 450))
+        self.pro_1 = ImageTk.PhotoImage(self.pro_1)
+        # image 2
+        self.pro_2 = Image.open("images\\Pro_agua.PNG")
+        self.pro_2 = self.pro_2.resize((450, 450))
+        self.pro_2 = ImageTk.PhotoImage(self.pro_2)
+
+
+
 
 master = ThemedTk(themebg=True)
 #ubuntu
 master.set_theme('breeze')
-master.geometry('200x200')
+master.geometry('200x250')
 app = GUI(master=master)
 app.mainloop()
