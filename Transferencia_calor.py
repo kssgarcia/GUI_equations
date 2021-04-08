@@ -1,4 +1,32 @@
 from sympy import symbols, Eq, solve
+# ---------------------------- Conveccion-------------------------------------------------------------
+# ----------------------------Rapidez de masa de flujo------------------------------------------------
+class rapidez_flujo:
+    incog = 0
+    def __init__(self, m,p,Vm,A):
+        self.m = m
+        self.p = p
+        self.Vm = Vm
+        self.A = A
+        if self.m == None:
+            self.m = symbols('m')
+            rapidez_flujo.incog = self.m
+        elif self.p == None:
+            self.p = symbols('p')
+            rapidez_flujo.incog = self.p
+        elif self.Vm == None:
+            self.Vm = symbols('Vm')
+            rapidez_flujo.incog=self.Vm
+        elif self.A == None:
+            self.A = symbols('A')
+            rapidez_flujo.incog=self.A
+    def solucion(self, solv=None):
+        ecuacion_rmf = Eq(self.m,self.p*self.Vm*self.A)
+        self.solv, *_ = solve(ecuacion_rmf, rapidez_flujo.incog)
+        return f'El valor de {rapidez_flujo.incog} es de {self.solv}'  
+
+# ---------------------------- Radiacion ---------------------------------------------------------------
+
 # -------------------- Energia entre ondas -----------------------------------------------------------
 class energia_entre_ondas_formula:
     incog = 0

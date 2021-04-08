@@ -11,7 +11,7 @@ from Convec_tub_ext import *
 from Matriz_orientacion import *
 from conve_h import *
 from q_tranferencia import *
-
+from conveccion_analitica import *
 
 class GUI(ttk.Frame):
     def __init__(self, master=None):
@@ -20,6 +20,7 @@ class GUI(ttk.Frame):
         self.pack()
         # create the button and set the command
         self.radiacion = ttk.Button(self, text="Radiacion", command=self.window_radia)
+        self.conva = ttk.Button(self,text='Conveccion analitica',command=self.window_cova)
         self.reynolds = ttk.Button(self, text="Reynolds", command=self.window_reynolds)
         self.nusselt = ttk.Button(self, text="Tub-int", command=self.window_nusselt)
         self.ext_tub = ttk.Button(self, text="Tubo_ext", command=self.window_ext_tub)
@@ -35,22 +36,27 @@ class GUI(ttk.Frame):
 
     def Grid_set(self):
         self.radiacion.grid(row=0, column=0)
-        self.reynolds.grid(row=1, column=0)
-        self.nusselt.grid(row=2, column=0)
-        self.ext_tub.grid(row=3, column=0)
-        self.matriz_.grid(row=4, column=0)
-        self.propiedades.grid(row=5, column=0)
-        self.propiedades_c.grid(row=6, column=0)
-        self.h_convec.grid(row=7, column=0)
-        self.q_h.grid(row=8, column=0)
-        self.q_masico.grid(row=9, column=0)
-        self.quit.grid(row=10, column=0)
+        self.conva.grid(row=1,column=0)
+        self.reynolds.grid(row=2, column=0)
+        self.nusselt.grid(row=3, column=0)
+        self.ext_tub.grid(row=4, column=0)
+        self.matriz_.grid(row=5, column=0)
+        self.propiedades.grid(row=6, column=0)
+        self.propiedades_c.grid(row=7, column=0)
+        self.h_convec.grid(row=8, column=0)
+        self.q_h.grid(row=9, column=0)
+        self.q_masico.grid(row=10, column=0)
+        self.quit.grid(row=11, column=0)
     
     def window_radia(self):
         self.newWindow = tk.Toplevel(self.master)
         self.newWindow.geometry('300x300')
         self.app = window_Radia(self.newWindow)
-
+    
+    def window_cova(self):
+        self.newWindow = tk.Toplevel(self.master)
+        self.newWindow.geometry('200x200')
+        self.app = window_convecion_anal(self.newWindow)  
     def window_reynolds(self):
         self.newWindow = tk.Toplevel(self.master)
         self.newWindow.title('Reynolds')
@@ -94,7 +100,18 @@ class GUI(ttk.Frame):
         self.newWindow = tk.Toplevel(self.master)
         self.newWindow.geometry('600x400')
         self.app = q_masic(self.newWindow)
-
+class window_convecion_anal(ttk.Frame):
+    def __init__(self, master=None):
+        super().__init__(master)
+        self.pack()
+        # create the buttons and set the command
+        self.rflujo = ttk.Button(self, text="Rapidez de masa de flujo", command=self.managed_windows_flujo)
+        self.rflujo.grid(row=0, column=0)
+    def managed_windows_flujo(self):
+        self.newWindow = tk.Toplevel(self.master)
+        self.newWindow.title('Rapidez de masa de flujo')
+        self.newWindow.geometry('600x500')
+        self.app = rap_masa_flujo(self.newWindow)
 class window_Radia(ttk.Frame):
     def __init__(self, master=None):
         super().__init__(master)
@@ -285,6 +302,6 @@ class propiedades_flujo_c(ttk.Frame):
 master = ThemedTk(themebg=True)
 #ubuntu
 master.set_theme('breeze')
-master.geometry('200x350')
+master.geometry('350x400')
 app = GUI(master=master)
 app.mainloop()
