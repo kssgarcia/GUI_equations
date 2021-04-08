@@ -10,13 +10,12 @@ from Radiation import *
 from Convec_tub_ext import *
 from Matriz_orientacion import *
 from conve_h import *
-<<<<<<< HEAD
-from q_tranferencia import *
-from conveccion_analitica import *
-=======
-from q_transferencia import *
 
->>>>>>> 04e2401a7ab6e772a72e9597488676b697e055a3
+from q_transferencia import *
+from conveccion_analitica import *
+
+
+
 
 class GUI(ttk.Frame):
     def __init__(self, master=None):
@@ -95,7 +94,7 @@ class GUI(ttk.Frame):
     def tabla_pro_c(self):
         self.newWindow = tk.Toplevel(self.master)
         self.newWindow.title('Tablas_Propiedades-°C')
-        self.newWindow.geometry('900x550')
+        self.newWindow.geometry('1300x900')
         self.app = propiedades_flujo_c(self.newWindow)
     def q_coeficiente(self):
         self.newWindow = tk.Toplevel(self.master)
@@ -176,15 +175,13 @@ class window_Radia(ttk.Frame):
         self.newWindow.title('Energia por longitud de onda B.B')
         self.newWindow.geometry('600x500')
         self.app = energy_lenght_BB(self.newWindow)
-<<<<<<< HEAD
+
     def eeo_radiation(self):
         self.newWindow = tk.Toplevel(self.master)
         self.newWindow.title('Energia entre longitudes de onda')
         self.newWindow.geometry('600x500')
         self.app = energia_entre_ondas(self.newWindow)
-=======
 
->>>>>>> 04e2401a7ab6e772a72e9597488676b697e055a3
 class window_Nusselt(ttk.Frame):
     def __init__(self, master=None):
         super().__init__(master)
@@ -366,12 +363,12 @@ class propiedades_flujo_c(ttk.Frame):
 
     def images(self):
         # image 1
-        self.proc_1 = Image.open("images\\tabl_1_c.PNG")
-        self.proc_1 = self.proc_1.resize((450, 450))
+        self.proc_1 = Image.open("images\\tabl_1_cn.PNG")
+        self.proc_1 = self.proc_1.resize((600, 700))
         self.proc_1 = ImageTk.PhotoImage(self.proc_1)
         # image 2
-        self.proc_2 = Image.open("images\\tabl_2_c.PNG")
-        self.proc_2 = self.proc_2.resize((450, 450))
+        self.proc_2 = Image.open("images\\tabl_2_cn.PNG")
+        self.proc_2 = self.proc_2.resize((600, 700))
         self.proc_2 = ImageTk.PhotoImage(self.proc_2)
 
 
