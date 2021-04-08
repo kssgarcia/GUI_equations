@@ -595,6 +595,89 @@ class Nusselt_7_ext(ttk.Frame):
     def show(self):
         ttk.Label(self, text=f'{self.nusselt_1}').grid(row=6, column=3)
 
+class bancos_ext(ttk.Frame):
+    def __init__(self, master=None):
+        super().__init__(master)
+        self.pack()
+        # Images 
+        self.images()
+        # Widgets
+        self.labels_pictures()
+        self.Entries()
+        self.Buttons()
+
+
+    def labels_pictures(self):
+        # create the button and set the command
+        # Title
+        ttk.Label(self, text='Bancos').grid(row=0, column=1, columnspan=2)
+        # Images
+        ttk.Label(self, image=self.img_bancos).grid(row=1, column=1)
+        # Variables
+        ttk.Label(self, text='Re').grid(row=3, column=0)
+        ttk.Label(self, text='nuss').grid(row=4, column=0)
+        ttk.Label(self, text='Pr').grid(row=5, column=0)
+        ttk.Label(self, text='Prs').grid(row=6, column=0)
+        ttk.Label(self, text='C').grid(row=7, column=0)
+        ttk.Label(self, text='m').grid(row=8, column=0)
+        ttk.Label(self, text='n').grid(row=9, column=0)
+        # button to q
+        ttk.Button(self, text="Salir", command=self.master.destroy).grid(row=11,column=0)
+
+
+    def Entries(self):
+        # labels for entries
+        self.Re = ttk.Entry(self)
+        self.Re.grid(row=3, column=1, columnspan=2)
+
+        self.nuss = ttk.Entry(self)
+        self.nuss.grid(row=4, column=1, columnspan=2)
+
+        self.Pr = ttk.Entry(self)
+        self.Pr.grid(row=5, column=1, columnspan=2)
+
+        self.Prs = ttk.Entry(self)
+        self.Prs.grid(row=6, column=1, columnspan=2)
+
+        self.C = ttk.Entry(self)
+        self.C.grid(row=7, column=1, columnspan=2)
+
+        self.m = ttk.Entry(self)
+        self.m.grid(row=8, column=1, columnspan=2)
+
+        self.n = ttk.Entry(self)
+        self.n.grid(row=9, column=1, columnspan=2)
+    
+
+
+    def get_entries(self):
+        self.dict_entries = {'Re': self.Re.get(), 'nuss': self.nuss.get(), 'Pr': self.Pr.get(), 'Prs': self.Prs.get(), 'm': self.m.get(), 'n': self.n.get(), 'C': self.C.get()}
+        for item, value in self.dict_entries.items():
+            if value == 'None':
+                self.dict_entries[item] = None
+            elif type(value) is str:
+                self.dict_entries[item] = float(value)
+        self.equation(**self.dict_entries)
+
+
+    def Buttons(self):
+        save = ttk.Button(self, text='Guardar', command=self.get_entries)
+        show = ttk.Button(self, text='Calcular', command=self.show)
+        save.grid(row=8, column=4)
+        show.grid(row=8, column=5)
+
+
+    def images(self):
+        self.img_bancos = Image.open("images\\ecuacion_bancos.PNG")
+        self.img_bancos = self.img_bancos.resize((500, 500))
+        self.img_bancos = ImageTk.PhotoImage(self.img_bancos)
+
+    def equation(self, Re, nuss, Pr, Prs, C, m, n):
+        self.nusselt_1 = bancos(Re=Re, nuss=nuss, Pr=Pr, Prs=Prs, C=C, m=m, n=n)
+
+    def show(self):
+        ttk.Label(self, text=f'{self.nusselt_1}').grid(row=7, column=3)
+    
 class Tablas(ttk.Frame):
     def __init__(self, master=None):
         super().__init__(master)

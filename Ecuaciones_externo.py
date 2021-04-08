@@ -241,4 +241,47 @@ class Nusselt7_ext():
     def __str__(self):
         return self.solucion_total()
 
+class bancos():
+    incog = 0
 
+    def __init__(self, Re, nuss, Pr, Prs, C, m, n):
+        self.nuss = nuss
+        self.Re = Re
+        self.Pr = Pr
+        self.Prs = Prs
+        self.C = C
+        self.m = m
+        self.n = n
+        if self.nuss == None:
+            self.nuss = symbols('nuss')
+            Nusselt3_ext.incog = self.nuss
+        elif self.Re == None:
+            self.Re = symbols('Re')
+            Nusselt3_ext.incog = self.Re
+        elif self.Pr == None:
+            self.Pr = symbols('Pr')
+            Nusselt3_ext.incog = self.Pr
+        elif self.Prs == None:
+            self.Prs = symbols('Prs')
+            Nusselt3_ext.incog = self.Prs
+        elif self.C == None:
+            self.C = symbols('C')
+            Nusselt3_ext.incog = self.C
+        elif self.m == None:
+            self.m = symbols('m')
+            Nusselt3_ext.incog = self.m
+        elif self.n == None:
+            self.n = symbols('n')
+            Nusselt3_ext.incog = self.n
+
+    def NPr(self):
+        N_Pr = (self.C*self.Re**self.m)*(self.Pr*self.n)*(self.Pr/self.Prs)**0.25
+        return N_Pr
+
+    def solucion_total(self):
+        ecuacion = Eq(self.NPr(), self.nuss)
+        self.solv, *_ = solve(ecuacion, Nusselt3_ext.incog)
+        return f'El valor de {Nusselt3_ext.incog} es de {self.solv}'
+
+    def __str__(self):
+        return self.solucion_total()

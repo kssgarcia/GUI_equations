@@ -235,7 +235,7 @@ class conve_ext_tub(ttk.Frame):
         self.var_6 = ttk.Button(self, text="Nusselt-5", command=self.nuss_5_ext)
         self.var_7 = ttk.Button(self, text="Nusselt-6", command=self.nuss_6_ext)
         self.var_8 = ttk.Button(self, text="Nusselt-7", command=self.nuss_7_ext)
-        self.var_9 = ttk.Button(self, text="Tablas", command=self.Tablas_emp)
+        self.var_9 = ttk.Button(self, text="Bancos", command=self.nuss_bancos)
         self.quit = ttk.Button(self, text="Salir", command=self.master.destroy)
         # Grid the buttons
         self.var_1.grid(row=1, column=1)
@@ -293,11 +293,16 @@ class conve_ext_tub(ttk.Frame):
         self.newWindow.title('Nusselt-6')
         self.newWindow.geometry('800x500')
         self.app = Nusselt_7_ext(self.newWindow)
-    def Tablas_emp(self):
+    def nuss_bancos(self):
         self.newWindow = tk.Toplevel(self.master)
-        self.newWindow.title('Tablas empirico')
-        self.newWindow.geometry('1000x800')
-        self.app = Tablas(self.newWindow)
+        self.newWindow.title('Nusselt-6')
+        self.newWindow.geometry('800x500')
+        self.app = bancos_ext(self.newWindow)
+    # def Tablas_emp(self):
+    #     self.newWindow = tk.Toplevel(self.master)
+    #     self.newWindow.title('Tablas empirico')
+    #     self.newWindow.geometry('1000x800')
+    #     self.app = Tablas(self.newWindow)
 
 class propiedades_flujo(ttk.Frame):
     def __init__(self, master=None):
