@@ -4,6 +4,106 @@ from tkinter import ttk
 from ttkthemes import ThemedTk
 
 from Transferencia_calor import * 
+class energia_entre_ondas(ttk.Frame):
+    def __init__(self, master=None):
+        super().__init__(master)
+        self.pack()
+        # Images 
+        self.imagenes_eeo()
+        # Widgets
+        self.labels_eeo()
+        self.Entradas_eeo()
+        self.Botones_eeo()
+    def Entradas_eeo(self):
+     # labels for entries
+        self.l1 = ttk.Entry(self)
+        self.l1.grid(row=3, column=1, columnspan=2)
+        self.l2 = ttk.Entry(self)
+        self.l2.grid(row=4, column=1, columnspan=2) 
+        self.T = ttk.Entry(self)
+        self.T.grid(row=5,column=1,columnspan=2) 
+        self.A = ttk.Entry(self)
+        self.A.grid(row=6,column=1,columnspan=2)
+        self.Ebo2 = ttk.Entry(self)
+        self.Ebo2.grid(row=13,column=1,columnspan=2)
+        self.Ebo1 = ttk.Entry(self)
+        self.Ebo1.grid(row=14,column=1,columnspan=2)
+    def labels_eeo(self):
+         # Title
+        ttk.Label(self, text='Energia entre longitudes de onda').grid(row=0, column=1, columnspan=2)
+        # Images
+        ttk.Label(self, image=self.eeo).grid(row=1, column=0, columnspan=3)
+        #Variables
+        ttk.Label(self, text='Longitud de onda 1 [micrometros]').grid(row=3, column=0)
+        ttk.Label(self, text='Longitud de onda 2 [micrometros]').grid(row=4, column=0) 
+        ttk.Label(self, text='Temperatura [T]').grid(row=5, column=0) 
+        ttk.Label(self,text='Area [m2]').grid(row=6, column=0)  
+        ttk.Label(self,text="Energia lambda 2 tabla").grid(row=13,column=0)
+        ttk.Label(self,text="Energia lambda 1 tabla").grid(row=14,column=0)
+    def Botones_eeo(self):
+        save = ttk.Button(self, text='Guardar',command=self.obtener_entradas_eeo)
+        show = ttk.Button(self, text='Calcular', command=self.mostrar_eeo)
+        quit1 = ttk.Button(self, text="Salir", command=self.master.destroy)
+        tabla = ttk.Button(self, text="Tablas",command = self.tabla_eeo)
+        save1 = ttk.Button(self, text='Guardar datos tabla',command=self.obtener_entradas_tabla)
+        save.grid(row=10, column=1)
+        show.grid(row=10, column=2)
+        quit1.grid(row=10, column=3) 
+        tabla.grid(row=12,column=1) 
+        save1.grid(row=15,column=1)
+    def imagenes_eeo(self):
+        # image 1
+        self.eeo = Image.open("images\\eeo.JPG")
+        self.eeo = self.eeo.resize((250, 150))
+        self.eeo = ImageTk.PhotoImage(self.eeo) 
+    def obtener_entradas_tabla(self):
+        self.dictt_entries = {'Ebo2': self.Ebo2.get(),'Ebo1': self.Ebo1.get(),'T':self.T.get(),'A':self.A.get()}
+        for item, value in self.dictt_entries.items():
+            if value == 'None':
+                self.dictt_entries[item] = None
+            elif type(value) is str:
+                self.dictt_entries[item] = float(value)
+        self.eeo_ecu_table(**self.dictt_entries)   
+    def obtener_entradas_eeo(self):
+        self.dicteeo_entries = {'l1': self.l1.get(),'l2': self.l2.get(), 'T': self.T.get(),'A':self.A.get()}
+        for item, value in self.dicteeo_entries.items():
+            if value == 'None':
+                self.dicteeo_entries[item] = None
+            elif type(value) is str:
+                self.dicteeo_entries[item] = float(value)
+        self.eeo_ecu(**self.dicteeo_entries)
+
+    def eeo_ecu_table(self,Ebo2,Ebo1,T,A):
+        self.Et = energia_entre_ondas_formula2(Ebo2=Ebo2,Ebo1=Ebo1,T=T,A=A)
+        ttk.Label(self,text=f'{self.Et.solucion2()}').grid(row=16)
+    def eeo_ecu(self,l1, l2, T,A):
+        self.Energy_eeo = energia_entre_ondas_formula(l1=l1,l2=l2, T=T,A=A)
+
+    def mostrar_eeo(self):
+        ttk.Label(self, text=f'{self.Energy_eeo.solucion1()}').grid(row=11, column=1)
+    
+    def tabla_eeo(self):
+        self.newWindow = tk.Toplevel(self.master)
+        self.newWindow.title('Tabla')
+        self.newWindow.geometry('600x500')
+        self.app = tabla_eeo_1(self.newWindow)
+
+class tabla_eeo_1(ttk.Frame):
+    def __init__(self, master=None):
+        super().__init__(master)
+        self.pack()
+        # Images
+        self.imagenes_teeo()
+        self.labels_teoo()
+    def labels_teoo(self):
+        ttk.Label(self,text="Tables").grid(row=0,column=1, columnspan=2)
+        ttk.Label(self, image=self.i1).grid(row=1, column=0, columnspan=3)
+    def imagenes_teeo(self):
+        # image 1
+        self.i1 = Image.open("images\\i1.JPG")
+        self.i1 = self.i1.resize((400,400 ))
+        self.i1 = ImageTk.PhotoImage(self.i1)
+
 class energy_lenght_BB(ttk.Frame):
     def __init__(self, master=None):
         super().__init__(master)

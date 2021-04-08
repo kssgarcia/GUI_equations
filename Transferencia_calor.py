@@ -1,4 +1,37 @@
 from sympy import symbols, Eq, solve
+# -------------------- Energia entre ondas -----------------------------------------------------------
+class energia_entre_ondas_formula:
+    incog = 0
+    def __init__(self, l1,l2,T,A):
+        self.l1 = l1
+        self.l2 = l2
+        self.T = T
+        self.A = A
+        if self.l1 == None:
+            self.l1 = symbols('l1')
+            energia_entre_ondas_formula.incog = self.l1
+        elif self.l2 == None:
+            self.l2 = symbols('l2')
+            energia_entre_ondas_formula.incog = self.l2
+        elif self.T == None:
+            self.T = symbols('T')
+            energia_entre_ondas_formula.incog=self.T
+        elif self.A == None:
+            self.A = symbols('A')
+            energia_entre_ondas_formula.incog=self.A
+    def solucion1(self, solv=None):
+        self.c1 = self.l1 * self.T
+        self.c2 = self.l2 * self.T
+        return f'El valor de l1*T es de {self.c1} y el valor de l2*T es {self.c2}'
+class energia_entre_ondas_formula2:
+    def __init__(self, Ebo2,Ebo1,T,A):
+        self.Ebo2 = Ebo2
+        self.Ebo1 = Ebo1
+        self.T = T
+        self.A = A
+    def solucion2(self, solv=None):
+        self.sol = 5.669e-8*self.T**4*(self.Ebo2-self.Ebo1)*self.A
+        return f'El valor de la radiacion total incidente es de {self.sol}'
 # -------------------- Enegia por longitud de onda de un cuerpo negro ---------------------------------
 class longitud_energia_onda:
     incog = 0

@@ -48,7 +48,7 @@ class GUI(ttk.Frame):
     
     def window_radia(self):
         self.newWindow = tk.Toplevel(self.master)
-        self.newWindow.geometry('250x250')
+        self.newWindow.geometry('300x300')
         self.app = window_Radia(self.newWindow)
 
     def window_reynolds(self):
@@ -107,6 +107,7 @@ class window_Radia(ttk.Frame):
         self.mam = ttk.Button(self, text="Masa y momento de las particulas",command = self.mam_radiation)
         self.deno = ttk.Button(self, text="Densidad de energia de la onda",command = self.deno_radiation)
         self.lBB = ttk.Button(self, text="Energia por longitud de onda B.B",command = self.BB_radiation)
+        self.eeo = ttk.Button(self, text="Energia entre longitudes de onda",command = self.eeo_radiation)
         self.quit = ttk.Button(self, text="Quit", command=self.master.destroy)
         # Grid the buttons
         self.forradiacion.grid(row=0, column=0)
@@ -116,7 +117,8 @@ class window_Radia(ttk.Frame):
         self.mam.grid(row=4,column=0)
         self.deno.grid(row=5, column=0)
         self.lBB.grid(row=6,column=0)
-        self.quit.grid(row=7, column=0)
+        self.eeo.grid(row=7, column=0)
+        self.quit.grid(row=8, column=0)
     def managed_windows(self):
         self.newWindow = tk.Toplevel(self.master)
         self.newWindow.title('Radiacion')
@@ -152,6 +154,11 @@ class window_Radia(ttk.Frame):
         self.newWindow.title('Energia por longitud de onda B.B')
         self.newWindow.geometry('600x500')
         self.app = energy_lenght_BB(self.newWindow)
+    def eeo_radiation(self):
+        self.newWindow = tk.Toplevel(self.master)
+        self.newWindow.title('Energia entre longitudes de onda')
+        self.newWindow.geometry('600x500')
+        self.app = energia_entre_ondas(self.newWindow)
 class window_Nusselt(ttk.Frame):
     def __init__(self, master=None):
         super().__init__(master)
